@@ -77,49 +77,26 @@
 <script>
     $(document).ready(function(){
         sessionStorage.setItem("user_arr", "[]");
-
+        sessionStorage.setItem("user_count", "0");
+        sessionStorage.setItem("cost_total", "0");
         // var user_arr = [];
-        var user_count = 0;
-        var cost_total = 0 ;
+        var user_count = Number(sessionStorage.getItem("user_count"));
+        // var cost_total = 0 ;
 
         // 新增user
         $('#add_user').click(function(){
-            render(user_count)  // 渲染畫面
             add_user_data(user_count)
-
-            $('#user_name').val('')
+            render(user_count)  // 渲染畫面
 
             // 刪除
-            $(`#del_${user_count}`).click(function(){
-                var delete_id = $(this).attr('id')
-                console.log(delete_id);
-                user_arr.splice(delete_id,1)
-                $(this).remove();
-            })
+            delete_user(user_count)
+
             user_count++;
+            sessionStorage.setItem("user_count", `${user_count}`);
         })
 
         // 新增項目
-        $('#add_list').click(function(){
-            var cost = Number( $('#cost').val() )
-            var item_list = $('#item_list').val()
-            var selete_user = $('#user_select').val()
-            // console.log("你選到",selete_user);
-            $('#cost_list').append(`<li class='list-group-item'>${user_arr[selete_user].name} - ${item_list} - NT$${cost}</li>`)
-            cost_total += cost //總金額
-            user_arr[selete_user].cost+=cost;//個人帳戶金額
-            $('#item_list,#cost').val("")
-            $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
-
-            // for(let i = 0 ; i < user_arr.length; i++ ){
-                // if( i !== selete_user ){
-                //     user_arr[i].give_someone[i].give_cost += cost/user_count 
-                // }
-                set_give_cost(user_arr,selete_user,cost)
-            // }
-            store_user_data(user_arr);
-            console.log("我新增一筆",user_arr);
-        })
+        add_item()
 
         // 結帳
         $('#Checkout').click(function(){
@@ -139,6 +116,45 @@
             }
         })
     })
+    // 新增項目
+    function add_item(){
+        $('#add_list').click(function(){
+            var cost_total =  Number(sessionStorage.getItem("cost_total"));
+            var user_arr = get_user_data()
+            var cost = Number( $('#cost').val() )
+            var item_list = $('#item_list').val()
+            var selete_user = $('#user_select').val()
+            console.log("你選到",selete_user);
+            var findIndex = user_arr.findIndex(item => item.id == selete_user)
+            console.log(findIndex);
+            $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost}</li>`)
+            cost_total += cost //總金額
+            user_arr[findIndex].cost+=cost;//個人帳戶金額
+            $('#item_list,#cost').val("")
+            $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+
+            set_give_cost(user_arr,selete_user,cost)
+            store_user_data(user_arr);
+            console.log("我新增一筆",user_arr);
+        })
+    }
+    // 刪除項目
+    function delete_user(user_count){
+        var user_arr = get_user_data()
+        $(`#${user_count}`).click(function(){
+                
+                var delete_id = $(this).attr('id')
+                console.log(delete_id);
+                for(let i= 0 ; i < user_arr.length ;i++ ){
+                    if(user_arr[i].id == delete_id){
+                        user_arr.splice(i,1)
+                    }
+                }
+                $(this).remove();
+                $(`#user_select option[value=${delete_id}]`).remove()
+                console.log("現在剩下",user_arr);
+            })
+    }
 
     // 更新使用者資廖
     function add_user_data(user_count){
@@ -159,24 +175,26 @@
     
     // 渲染畫面
     function render(user_count){
-
         var user_name = $('#user_name').val()
-            $('#user_block').append(
-                `
-                <div class="col mt-3" id=${user_count}>
-                    <div class="input-group ">
-                        <span class="btn btn-danger" id="del_${user_count}"><i class="bi bi-dash-lg"></i></span>
-                        <input type="text" class="form-control me-3" value= ${user_name} disabled>
-                    </div>
+        $('#user_block').append(
+            `
+            <div class="col mt-3" id=${user_count}>
+                <div class="input-group ">
+                    <span class="btn btn-danger" id="del_${user_count}"><i class="bi bi-dash-lg"></i></span>
+                    <input type="text" class="form-control me-3" value= ${user_name} disabled>
                 </div>
-                `
-            )
-            // 下拉選單新增選項
-            $('#user_select').append(
-                `
-                <option value="${user_count}">${user_name}</option>
-                `
-            )
+            </div>
+            `
+        )
+        // 下拉選單新增選項
+        $('#user_select').append(
+            `
+            <option value="${user_count}">${user_name}</option>
+            `
+        )
+        // 清空輸入雙
+        $('#user_name').val('')
+    
     }
 
     function store_user_data(user_arr){
