@@ -84,23 +84,8 @@
 
         // 新增user
         $('#add_user').click(function(){
-            var user_name = $('#user_name').val()
-            $('#user_block').append(
-                `
-                <div class="col mt-3" id=${user_count}>
-                    <div class="input-group ">
-                        <span class="btn btn-danger" id="del_${user_count}"><i class="bi bi-dash-lg"></i></span>
-                        <input type="text" class="form-control me-3" value= ${user_name} disabled>
-                    </div>
-                </div>
-                `
-            )
-            // 下拉選單新增選項
-            $('#user_select').append(
-                `
-                <option value="${user_count}">${user_name}</option>
-                `
-            )
+            render(user_count)  // 渲染畫面
+            
             user_arr.push({
                 id:user_count,
                 name:user_name,
@@ -174,8 +159,25 @@
     })
 
     // 取得目前的give someont
-    function get_give_someone(){
-        
+    function render(user_count){
+
+        var user_name = $('#user_name').val()
+            $('#user_block').append(
+                `
+                <div class="col mt-3" id=${user_count}>
+                    <div class="input-group ">
+                        <span class="btn btn-danger" id="del_${user_count}"><i class="bi bi-dash-lg"></i></span>
+                        <input type="text" class="form-control me-3" value= ${user_name} disabled>
+                    </div>
+                </div>
+                `
+            )
+            // 下拉選單新增選項
+            $('#user_select').append(
+                `
+                <option value="${user_count}">${user_name}</option>
+                `
+            )
     }
 
     function store_user_data(user_arr){
