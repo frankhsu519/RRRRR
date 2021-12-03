@@ -78,44 +78,26 @@
     $(document).ready(function(){
         sessionStorage.setItem("user_arr", "[]");
 
-        var user_arr = [];
+        // var user_arr = [];
         var user_count = 0;
         var cost_total = 0 ;
 
         // 新增user
         $('#add_user').click(function(){
             render(user_count)  // 渲染畫面
-            
-            user_arr.push({
-                id:user_count,
-                name:user_name,
-                cost:0,
-                give_someone :[]
-            })
-            
-            for(let i = 0 ; i < user_arr.length ; i++){
-                user_arr[i].give_someone = set_give_someone(user_arr.length, user_arr)
-            }
+            add_user_data(user_count)
 
             $('#user_name').val('')
-            console.log('確認一下',user_arr);
-            
+
             // 刪除
             $(`#del_${user_count}`).click(function(){
-                
                 var delete_id = $(this).attr('id')
                 console.log(delete_id);
                 user_arr.splice(delete_id,1)
                 $(this).remove();
-                // console.log("現在剩下",user_arr);
             })
             user_count++;
-            store_user_data(user_arr);
         })
-
-        
-
-
 
         // 新增項目
         $('#add_list').click(function(){
@@ -158,7 +140,24 @@
         })
     })
 
-    // 取得目前的give someont
+    // 更新使用者資廖
+    function add_user_data(user_count){
+        var user_name = $('#user_name').val()
+        var user_arr = get_user_data();
+        // debugger
+        user_arr.push({
+                id:user_count,
+                name:user_name,
+                cost:0,
+                give_someone :[]
+            })
+            for(let i = 0 ; i < user_arr.length ; i++){
+                user_arr[i].give_someone = set_give_someone(user_arr.length, user_arr)
+            }
+            store_user_data(user_arr);
+    }
+    
+    // 渲染畫面
     function render(user_count){
 
         var user_name = $('#user_name').val()
