@@ -99,7 +99,14 @@
         add_item()
 
         // 結帳
+        checkout()
+    })
+    // 結帳
+    function checkout(){
         $('#Checkout').click(function(){
+            var user_arr = get_user_data();
+            var cost_total =  Number(sessionStorage.getItem("cost_total"));
+            var user_count = Number(sessionStorage.getItem("user_count"));
             console.log('取得資料:' ,get_user_data())
             var user_total = $('#user_total').val()
             var avg_cost = cost_total /user_count ;
@@ -115,7 +122,7 @@
                 $("#qq").append(`<hr>`)
             }
         })
-    })
+    }
     // 新增項目
     function add_item(){
         $('#add_list').click(function(){
@@ -136,6 +143,7 @@
             set_give_cost(user_arr,selete_user,cost)
             store_user_data(user_arr);
             console.log("我新增一筆",user_arr);
+            sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
         })
     }
     // 刪除項目
