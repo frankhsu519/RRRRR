@@ -141,8 +141,7 @@
         <div class="row">
           <div class="col-3">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-              <label class="form-check-label" for="flexSwitchCheckDefault">某個人</label>
+              ${built_owes_me_temp_by(user.name)}
             </div>
           </div>
           <div class="col-3">
@@ -203,8 +202,28 @@
     window.user_list = user_list // 把結果重更新回全域變數
   }
   
-  function updata_psersons_owes_me_money_amount(){
+  function get_attend_order_person(name){
+    var user_list = window.user_list;
+    for(var i=0;i<user_list.length;i++){
+      if(user_list[i].name == name ){
+        return user_list[i].who_owes_me
+      }
+    }
+  }
 
+  function built_owes_me_temp_by(name){
+    var owe_pserson_array = get_attend_order_person(name)
+    // debugger
+    var owe_pserson_temp = ''
+    owe_pserson_array.forEach(item=>{
+      owe_pserson_temp +=`
+      <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="${item.who_owes_me}_checkbox">
+              <label class="form-check-label" for="flexSwitchCheckDefault">${item.who_owes_me}</label>
+            </div>
+      `
+    })
+    return owe_pserson_temp;
   }
 
   // 判斷是否check
