@@ -91,8 +91,8 @@
     
     $('#user_wallet_tab').html(li_template)
     $('#user_wallet_content').html(li_content);
-    $('#user_wallet_tab').find(">:first-child").find('button').addClass('active')
-    // $('#user_wallet_content').find(">:first-child").addClass('active')
+    $('#user_wallet_tab li').eq(0).find('button').addClass('active')
+    $('#user_wallet_content div').eq(0).addClass('active')
   }
 
   // 更新資料
