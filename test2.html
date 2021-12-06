@@ -262,11 +262,13 @@
     var wallet_owner = $(`.owe_${name}_area input[type='checkbox']`).parent().parent().parent().parent().parent().attr('id')
     var share_people = []
     for(var i =0;i<checkbox.length;i++){
-      share_people.push(check_if_attend_share_by(checkbox[i]))
+      if (check_if_attend_share_by(checkbox[i]) != undefined) {
+        share_people.push(check_if_attend_share_by(checkbox[i]))
+      }
     }
     // console.log('這個人代墊:',name, '項目及金額',cost_item, cost_number)
     console.log('分攤名單:', share_people)
-    render_cost_item_by(share_people, wallet_owner)
+    render_cost_item_by(share_people, wallet_owner, cost_item, cost_number)
   }
 
   // 判斷是否check
@@ -282,17 +284,20 @@
   }
 
   // 渲染這一筆消費，以及會幫忙出錢的人
-  function render_cost_item_by(share_people, wallet_owner){
+  function render_cost_item_by(share_people, wallet_owner, cost_item, cost_number){
     // debugger
     console.log($(`#${wallet_owner}`).find('.costitem_area'));
     var costitem_area = $(`#${wallet_owner}`).find('.costitem_area .list-group .list-group-item')
     var costitem_area_temp='';
     for(var i = 0;i<share_people.length;i++){
       if (share_people[i] != undefined) {
-        costitem_area_temp += share_people[i]
+        costitem_area_temp += `<span class="share_person">${share_people[i]}</span>,`
       }
     }
-    costitem_area.html(costitem_area_temp)
+    // console.log
+    var numberPerPerson = `<span class="average_thisItem">${Number(cost_number)/Number(share_people.length)}</span>`
+    var costitem_area_container_temp = `買了${cost_item},${costitem_area_temp}分攤，每人${numberPerPerson}元`
+    costitem_area.html(costitem_area_container_temp)
  
 
   }
