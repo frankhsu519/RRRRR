@@ -33,7 +33,28 @@
 
 
     <div class="tab-content" id="user_wallet_content">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">1111</div>
+      <div class="tab-pane fade show active container" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row">
+          <div class="col-2">某人代墊了
+          </div>
+          <div class="col-3">
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-gift"></i></span>
+              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="input-group mb-3">
+              <span class="input-group-text">$</span>
+              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <span class="input-group-text">元</span>
+            </div>
+          </div>
+          <div class="col-4"><button type="button" class="btn btn-primary">新增這筆代墊</button></div>
+        </div>
+        
+
+      </div>
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">22222</div>
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">3333</div>
     </div>
@@ -133,9 +154,6 @@
   }
   .user_wallet .nav.nav-tabs {
     margin-bottom: 16px;
-  }
-  .user_wallet .tab-content {
-    padding: 16px;
   }
 
 </style>
