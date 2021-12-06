@@ -154,6 +154,12 @@
           </div>
           <div class="col-3"><button type="button" class="btn btn-primary" onclick="find_who_cost_item('${user.name}')" id="${user.name}_add_btn">新增這筆</button></div>
         </div>
+
+        <div class="row costitem_area">
+          <ul class="list-group">
+            <li class="list-group-item">An item</li>
+          </ul>
+        </div>
         
         </div>
       `
@@ -230,8 +236,8 @@
     var owe_pserson_temp = ''
     owe_pserson_array.forEach(item=>{
       owe_pserson_temp +=`
-      <div class="form-check form-switch" id="owe_${name}_area">
-              <input class="form-check-input ${item.who_owes_me}_checkbox" type="checkbox">
+      <div class="form-check form-switch owe_${name}_area">
+              <input class="form-check-input ${item.who_owes_me}_checkbox" name="${item.who_owes_me}" type="checkbox">
               <label class="form-check-label" for="flexSwitchCheckDefault">${item.who_owes_me}</label>
             </div>
       `
@@ -241,7 +247,6 @@
 
 // 新增花費項目 更新cost_item my_cost
   function find_who_cost_item(name){
-    // debugger
     var user_list = window.user_list
     for(var i=0;i<user_list.length;i++){
       if(user_list[i].name == name){
@@ -253,17 +258,40 @@
   function apdate_cost_item(name){
     var cost_item = $(`#${name}_costitem`).val()
     var cost_number = $(`#${name}_costnumber`).val()
-    // debugger
+    var checkbox = $(`.owe_${name}_area input[type='checkbox']`)
+    var wallet_owner = $(`.owe_${name}_area input[type='checkbox']`).parent().parent().parent().parent().parent().attr('id')
+    for(var i =0;i<checkbox.length;i++){
+      check_if_attend_share_by(checkbox[i], wallet_owner)
+    }
     console.log('這個人代墊:',name, '項目及金額',cost_item, cost_number)
   }
 
   // 判斷是否check
-//   if ($('#flexSwitchCheckDefault').is(":checked"))
-// {
-//   console.log('check')
-// }else {
-//     console.log('no')
-// }
+  function check_if_attend_share_by(checkbox, wallet_owner){
+    console.log(checkbox.parent)
+    var share_people = []
+    if (checkbox.checked){
+      console.log(checkbox.name,'會幫忙出')
+      share_people.push(checkbox.name)
+    }else {
+      console.log('no')
+    }
+    if(share_people != []) render_cost_item_by(share_people, wallet_owner)
+  }
+
+  // 渲染這一筆消費，以及會幫忙出錢的人
+  function render_cost_item_by(share_people, wallet_owner){
+    console.log($(`#${wallet_owner}`).find('.costitem_area'));
+    var costitem_area = $(`#${wallet_owner}`).find('.costitem_area .list-group .list-group-item')
+    var costitem_area_temp='';
+    for(var i = 0;i<share_people.length;i++){
+      costitem_area_temp += share_people[i]
+    }
+    costitem_area.html(costitem_area_temp)
+
+
+  }
+  
 
 </script>
 <style>
