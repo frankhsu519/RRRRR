@@ -60,29 +60,39 @@
       $('.nav.nav-tabs .nav-link').on('click',function(){
         $('.nav.nav-tabs .nav-link').removeClass('active')
         $(this).addClass('active')
+        console.log($(this).parent().index())
+        var current_active_index = $(this).parent().index()
+        $('#user_wallet_content div').eq(current_active_index).addClass('active')
       })
+
       $('#add_user_btn').on('click', function(){
         update_user_data()
         // render()
-        
       })
     }
   window.user_list = []
   // 渲染畫面
   function render(user_list){
     var li_template='';
+    var li_content = '';
     user_list.forEach(user => {
       console.log(user.name)
       li_template += `
         <li class="nav-item" role="presentation">
-          <button class="nav-link " id="${user.name}" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">${user.name}</button>
+          <button class="nav-link " id="${user.name}_tab" data-bs-toggle="tab" data-bs-target="#${user.name}" type="button" role="tab" aria-controls="${user.name}" aria-selected="true">${user.name}</button>
         </li>
       `;
+      li_content +=`
+      <div class="tab-pane fade show" id="${user.name}" role="tabpanel" aria-labelledby="${user.name}-tab">${user.name}</div>
+      `
     })
+
+
     
     $('#user_wallet_tab').html(li_template)
+    $('#user_wallet_content').html(li_content);
     $('#user_wallet_tab').find(">:first-child").find('button').addClass('active')
-    
+    // $('#user_wallet_content').find(">:first-child").addClass('active')
   }
 
   // 更新資料
