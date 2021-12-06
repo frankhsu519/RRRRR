@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="user_add">
+    <div class="input-group flex-nowrap">
+      <span class="input-group-text" id="addon-wrapping"><i class="bi bi-person-circle"></i></span>
+      <input id="user_name" type="text" class="form-control" placeholder="請輸入使用者姓名" aria-label="Username" aria-describedby="addon-wrapping">
+      <button type="button" class="btn btn-secondary" id="add_user_btn"><i class="bi bi-plus"></i></button>
+    </div>
+  </div>
+  <div class="user_wallet">
+    <ul class="nav nav-tabs" id="user_wallet_tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="user_wallet_content">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">1111</div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">22222</div>
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">3333</div>
+    </div>
+  </div>
+  <hr>
+  <div class="total_area">
+    Total_area
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+</body>
+</html>
+<script>
+  $(document).ready(function(){
+    init()
+  })
+
+  // 初始化
+  function init(){
+      $('.nav.nav-tabs .nav-link').on('click',function(){
+        $('.nav.nav-tabs .nav-link').removeClass('active')
+        $(this).addClass('active')
+      })
+      $('#add_user_btn').on('click', function(){
+        render()
+      })
+    }
+  window.user_list = []
+  // 渲染畫面
+  function render(){
+    var user = $('#user_name').val()
+    window.user_list.push(user)
+    
+    // debugger
+    // var li_template = `
+    //   <li class="nav-item" role="presentation">
+    //     <button class="nav-link active" id="${user}" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+    //   </li>
+    // `;
+    // $('#user_wallet_tab').html(li_template)
+    $('#user_name').val('')
+  }
+
+  // 更新資料
+  function user_data(user_list){
+    var result = []
+
+    var each_person_wallet =  {
+      name: '',
+      id: '',
+      wallet: []
+    }
+
+  }
+
+
+</script>
+<style>
+  body{
+    padding: 16px;
+  }
+  .user_add {
+    margin-bottom: 48px;
+  }
+  .user_wallet {
+    margin-bottom: 48px;
+  }
+  .user_wallet .nav.nav-tabs {
+    margin-bottom: 16px;
+  }
+  .user_wallet .tab-content {
+    padding: 16px;
+  }
+
+</style>
