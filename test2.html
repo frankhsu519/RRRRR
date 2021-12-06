@@ -112,7 +112,7 @@
     var li_template='';
     var li_content = '';
     user_list.forEach(user => {
-      console.log(user.name)
+      // console.log(user.name)
       li_template += `
         <li class="nav-item" role="presentation">
           <button class="nav-link " id="${user.name}_tab" data-bs-toggle="tab" data-bs-target="#${user.name}" type="button" role="tab" aria-controls="${user.name}" aria-selected="true">${user.name}</button>
@@ -171,10 +171,7 @@
     var each_person_wallet =  {
       name: user,
       cost_item: '',
-      psersons_owes_me_money:[{
-        who_owes_me: '',
-        amount: ''
-      }]
+      psersons_owes_me_money:[]
     }
 
     window.user_list.push(each_person_wallet)
@@ -183,7 +180,23 @@
 
     // 清空輸入框
     $('#user_name').val('')
+    updata_psersons_owes_me_money()
     render(window.user_list)
+  }
+
+  // 更新參與均分者
+  function updata_psersons_owes_me_money (){
+    var user_list = window.user_list
+    var user_list_name = []
+    $.each(user_list, function(i,user,psersons_owes_me_money){
+      user_list_name.push({
+          who_owes_me: user.name,
+          amount: ''
+        }
+      )
+    })
+    console.log('人名清單',user_list_name)
+    window.user_list = user_list // 把結果重更新回全域變數
   }
 
   // 判斷是否check
