@@ -171,7 +171,8 @@
     var each_person_wallet =  {
       name: user,
       cost_item: '',
-      psersons_owes_me_money:[]
+      my_cost: '',
+      who_owes_me:[]
     }
 
     window.user_list.push(each_person_wallet)
@@ -180,12 +181,12 @@
 
     // 清空輸入框
     $('#user_name').val('')
-    updata_psersons_owes_me_money()
+    updata_psersons_owes_me_money_person()
     render(window.user_list)
   }
 
   // 更新參與均分者
-  function updata_psersons_owes_me_money (){
+  function updata_psersons_owes_me_money_person (){
     var user_list = window.user_list
     var user_list_name = []
     $.each(user_list, function(i,user,psersons_owes_me_money){
@@ -195,8 +196,15 @@
         }
       )
     })
-    console.log('人名清單',user_list_name)
+    for(var i=0;i<user_list.length;i++){
+      user_list[i].who_owes_me = user_list_name
+    }
+    // console.log('人名清單',user_list_name)
     window.user_list = user_list // 把結果重更新回全域變數
+  }
+  
+  function updata_psersons_owes_me_money_amount(){
+
   }
 
   // 判斷是否check
