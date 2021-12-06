@@ -61,7 +61,11 @@
           <div class="col-3">
             會一起攤這筆
           </div>
-          <div class="col-3"><button type="button" class="btn btn-primary">新增這筆代墊</button></div>
+          <div class="col-3"><button type="button" class="btn btn-primary">計算均分</button></div>
+        </div>
+        <!-- 計算區塊 -->
+        <div class="row">
+
         </div>
         
 
@@ -112,12 +116,13 @@
     var li_template='';
     var li_content = '';
     user_list.forEach(user => {
-      // console.log(user.name)
+      // 渲染頁籤
       li_template += `
         <li class="nav-item" role="presentation">
           <button class="nav-link " id="${user.name}_tab" data-bs-toggle="tab" data-bs-target="#${user.name}" type="button" role="tab" aria-controls="${user.name}" aria-selected="true">${user.name}</button>
         </li>
       `;
+      // 渲染內容
       li_content +=`
       <div class="tab-pane fade show container" id="${user.name}" role="tabpanel" aria-labelledby="${user.name}-tab">
         
@@ -127,13 +132,13 @@
           <div class="col-3">
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-gift"></i></span>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <input type="text" class="form-control" id="${user.name}_costitem" aria-label="Amount (to the nearest dollar)">
             </div>
           </div>
           <div class="col-3">
             <div class="input-group mb-3">
               <span class="input-group-text">$</span>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <input type="text" class="form-control" id="${user.name}_costnumber" aria-label="Amount (to the nearest dollar)">
               <span class="input-group-text">元</span>
             </div>
           </div>
@@ -147,7 +152,7 @@
           <div class="col-3">
             會一起攤這筆
           </div>
-          <div class="col-3"><button type="button" class="btn btn-primary" id="${user.name}_add_btn">新增這筆代墊</button></div>
+          <div class="col-3"><button type="button" class="btn btn-primary" onclick="find_who_cost_item('${user.name}')" id="${user.name}_add_btn">計算均分</button></div>
         </div>
         
         </div>
@@ -160,6 +165,14 @@
     $('#user_wallet_tab li').eq(0).find('button').addClass('active')
     $('#user_wallet_content div').eq(0).addClass('active')
   }
+  // 註冊新增模板事件
+  function addEvent(name){
+    debugger
+    console.log($(`#${name}_add_btn`))
+    $(`#${name}_add_btn`).on('click',function(){
+      find_who_cost_item(name)
+    })
+  }
 
   // 更新資料
   function update_user_data(user_list){
@@ -169,8 +182,8 @@
 
     var each_person_wallet =  {
       name: user,
-      cost_item: '',
-      my_cost: '',
+      cost_item: [],
+      my_cost: [],
       who_owes_me:[]
     }
 
@@ -224,6 +237,24 @@
       `
     })
     return owe_pserson_temp;
+  }
+
+// 新增花費項目 更新cost_item my_cost
+  function find_who_cost_item(name){
+    debugger
+    var user_list = window.user_list
+    for(var i=0;i<user_list.length;i++){
+      if(user_list[i].name == name){
+        apdate_cost_item(name)
+      }
+    }
+
+  }
+  function apdate_cost_item(name){
+    var cost_item = $(`#${name}_costitem`).val()
+    var cost_number = $(`#${name}_costnumber`).val()
+    debugger
+    console.log('項目及金額',cost_item, cost_number)
   }
 
   // 判斷是否check
