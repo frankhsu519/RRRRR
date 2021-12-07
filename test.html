@@ -175,8 +175,15 @@
                 cost:0,
                 give_someone :[]
             })
+            store_user_data(user_arr);
+
             for(let i = 0 ; i < user_arr.length ; i++){
-                user_arr[i].give_someone = set_give_someone(user_arr.length, user_arr)
+                if(i == user_arr.length-1){
+                    user_arr[i].give_someone = set_give_someone(user_arr.length, user_arr)
+                }
+                else{console.log(typeof user_arr[i].give_someone)
+                    user_arr[i].give_someone.push({user_id: user_count,user_name:user_name ,give_cost:0})
+                }
             }
             store_user_data(user_arr);
     }
@@ -216,7 +223,7 @@
 
 
     function set_give_someone(use_number, user_arr){
-            var result=[]
+            var result=[]            
             for(var i=0;i<use_number;i++){
                 result.push({user_id: user_arr[i].id,user_name:user_arr[i].name ,give_cost:0})
             }
