@@ -22,7 +22,7 @@
 
         <hr>
 
-        <div class="row" id="user_block">
+        <div class="row mb-4" id="user_block">
             <!-- append -->
         </div>
 
@@ -62,8 +62,7 @@
 
         <div class="row">
             <div class="col-12">
-               <p id="qq"></p>
-               <p id="ee"></p>
+               <p id="pay_someone_block"></p>
             </div>
         </div>
     </div>
@@ -107,19 +106,19 @@
             var user_arr = get_user_data();
             var cost_total =  Number(sessionStorage.getItem("cost_total"));
             var user_count = Number(sessionStorage.getItem("user_count"));
-            console.log('取得資料:' ,get_user_data())
+            // console.log('取得資料:' ,get_user_data())
             var user_total = $('#user_total').val()
             var avg_cost = cost_total /user_count ;
             $("#avg_cost").text("").append(`平均每人 : ${avg_cost}`)
-            $("#qq").text('')
+            $("#pay_someone_block").text('')
             for(let i= 0 ; i< get_user_data().length ;i++){
-                $("#qq").append(`${get_user_data()[i].name} - ${get_user_data()[i].cost} <br>` )
+                $("#pay_someone_block").append(`${get_user_data()[i].name} 總共花費 : ${get_user_data()[i].cost} <br>` )
                 for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
                     if(i !== get_user_data()[i].give_someone[j].user_id){
-                        $("#qq").append(`現在是 ${get_user_data()[i].name}- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${get_user_data()[i].give_someone[j].give_cost} <br>`)
+                        $("#pay_someone_block").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${get_user_data()[i].give_someone[j].give_cost} <br>`)
                     }
                 }
-                $("#qq").append(`<hr>`)
+                $("#pay_someone_block").append(`<hr>`)
             }
         })
     }
@@ -131,9 +130,9 @@
             var cost = Number( $('#cost').val() )
             var item_list = $('#item_list').val()
             var selete_user = $('#user_select').val()
-            console.log("你選到",selete_user);
+            // console.log("你選到",selete_user);
             var findIndex = user_arr.findIndex(item => item.id == selete_user)
-            console.log(findIndex);
+            // console.log(findIndex);
             $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost}</li>`)
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
@@ -142,33 +141,32 @@
 
             set_give_cost(user_arr,selete_user,cost)
             store_user_data(user_arr);
-            console.log("我新增一筆",user_arr);
+            // console.log("我新增一筆",user_arr);
             sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
         })
     }
     // 刪除項目
     function delete_user(user_count){
-        var user_arr = get_user_data()
         $(`#${user_count}`).click(function(){
-                
-                var delete_id = $(this).attr('id')
-                console.log(delete_id);
-                for(let i= 0 ; i < user_arr.length ;i++ ){
-                    if(user_arr[i].id == delete_id){
-                        user_arr.splice(i,1)
-                    }
+            var user_arr = get_user_data()
+            var delete_id = $(this).attr('id')
+            console.log('我點到誰',delete_id);
+            for(let i= 0 ; i < user_arr.length ;i++ ){
+                if(user_arr[i].id == delete_id){
+                    user_arr.splice(i,1)
                 }
-                $(this).remove();
-                $(`#user_select option[value=${delete_id}]`).remove()
-                console.log("現在剩下",user_arr);
+            }
+            $(this).closest(`#del_${delete_id}`).remove();
+            $(`#user_select option[value=${delete_id}]`).remove()
+            console.log("現在剩下",user_arr);
+            store_user_data(user_arr);
             })
     }
 
-    // 更新使用者資廖
+    // 更新使用者資料
     function add_user_data(user_count){
         var user_name = $('#user_name').val()
         var user_arr = get_user_data();
-        // debugger
         user_arr.push({
                 id:user_count,
                 name:user_name,
@@ -181,11 +179,12 @@
                 if(i == user_arr.length-1){
                     user_arr[i].give_someone = set_give_someone(user_arr.length, user_arr)
                 }
-                else{console.log(typeof user_arr[i].give_someone)
+                else{
                     user_arr[i].give_someone.push({user_id: user_count,user_name:user_name ,give_cost:0})
                 }
             }
             store_user_data(user_arr);
+            console.log("我新增囉",user_arr);
     }
     
     // 渲染畫面
@@ -193,9 +192,9 @@
         var user_name = $('#user_name').val()
         $('#user_block').append(
             `
-            <div class="col mt-3" id=${user_count}>
+            <div class="col mt-3" id=del_${user_count}>
                 <div class="input-group ">
-                    <span class="btn btn-danger" id="del_${user_count}"><i class="bi bi-dash-lg"></i></span>
+                    <span class="btn btn-danger" id="${user_count}"><i class="bi bi-dash-lg"></i></span>
                     <input type="text" class="form-control me-3" value= ${user_name} disabled>
                 </div>
             </div>
@@ -207,7 +206,7 @@
             <option value="${user_count}">${user_name}</option>
             `
         )
-        // 清空輸入雙
+        // 清空輸入框
         $('#user_name').val('')
     
     }
