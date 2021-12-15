@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
+
+<style>
+    .hide{
+        display: none;
+    }
+</style>
+
 <body>
     <div class="container  mt-5" style="border:1px solid steelblue;">
 
@@ -27,17 +34,36 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mt-3">
-                <div class="input-group mb-3">
+            <div class="col mt-3">
+                <div class="input-group mb-3" style="width: 250px;">
                     <button class="btn btn-outline-secondary" type="button" id="add_list"><i class="bi bi-plus-lg"></i></button>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
-                      </select>
-                    <input type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目"> 
-                    <span class="input-group-text">NT$</span>
-                    <input type="text" class="form-control" id="cost" placeholder="" >
+                    </select>
                 </div>
             </div>
+            <div class="col mt-3">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目">
+                </div>
+            </div>
+            <div class="col mt-3">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">NT$</span>
+                    <input type="text" class="form-control" id="cost" placeholder="" >
+                </div> 
+            </div>
+            <div class="col mt-3" id="pay_share">
+                分攤人員: 
+                <div class="form-check hide" id="switch_all_block">
+                    <input class="form-check-input" type="checkbox" id="switch_all">
+                    <label class="form-check-label" for="switch_all">全選</label>
+                </div>
+                <!-- <div class="form-check form-switch mx-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                </div> -->
+            </div>    
         </div>
 
         <hr>
@@ -99,6 +125,14 @@
 
         // 結帳
         checkout()
+        
+        // 全選
+        switch_all()
+
+
+        //分攤人員 switch
+        // share_switch_change()
+        
     })
     // 結帳
     function checkout(){
@@ -130,18 +164,39 @@
             var cost = Number( $('#cost').val() )
             var item_list = $('#item_list').val()
             var selete_user = $('#user_select').val()
+            
+            var switch_user = $('.form-switch')
+            var share_uesr = [];
+            for(let i = 0 ; i < switch_user.length ; i++){
+               if(switch_user[i].children[0].checked){
+                share_uesr.push(switch_user[i])
+               }
+            }
+            var share_str ='';
+            for(let i = 0 ; i < share_uesr.length ; i++ ){
+                share_str += `[ ${share_uesr[i].innerText} ]`
+                if(i!= share_uesr.length-1){
+                    share_str += ` , `
+                }
+            }
+
+
             // console.log("你選到",selete_user);
             var findIndex = user_arr.findIndex(item => item.id == selete_user)
             // console.log(findIndex);
-            $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost}</li>`)
+            $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost} ===> 分攤人員有 : ${share_str}</li> `)
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
             $('#item_list,#cost').val("")
             $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
 
-            set_give_cost(user_arr,selete_user,cost)
+            // set_give_cost(user_arr,selete_user,cost)
+            set_give_cost_new(user_arr,selete_user,cost,share_uesr)
             store_user_data(user_arr);
             // console.log("我新增一筆",user_arr);
+
+            // 按下結帳後,再新增項目時,先把結帳資訊清空
+            $("#pay_someone_block,#avg_cost").text('')
             sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
         })
     }
@@ -208,7 +263,26 @@
         )
         // 清空輸入框
         $('#user_name').val('')
-    
+
+       
+
+        // share switch
+        $('#pay_share').append(
+            `
+            <div class="form-check form-switch mx-3" id=Switch_${user_count}>
+                    <input class="form-check-input" type="checkbox" role="switch" id="Switch_${user_name}">
+                    <label class="form-check-label" for="Switch_${user_name}">${user_name}</label>
+            </div>            
+            `
+        )
+        // switch_all 
+        var  findCheckbox = $('.form-switch');
+        if(findCheckbox.length>=2){
+            $('#switch_all_block').removeClass('hide')
+        }
+        
+        // switch change
+        switch_change()
     }
 
     function store_user_data(user_arr){
@@ -219,7 +293,6 @@
     function get_user_data(){
         return JSON.parse(sessionStorage.getItem("user_arr"));
     }
-
 
     function set_give_someone(use_number, user_arr){
             var result=[]            
@@ -233,6 +306,64 @@
         for(let i= 0 ;i<user_arr.length; i++){
             user_arr[i].give_someone[selete_user].give_cost+= cost/user_arr.length;
         }
+    }
+
+    function set_give_cost_new(user_arr,selete_user,cost,share_uesr){
+        for(let i = 0 ; i < share_uesr.length ; i++){
+            for(let j = 0; j < user_arr.length ; j++ ){
+                if(share_uesr[i].innerText == user_arr[j].name){
+                    user_arr[j].give_someone[selete_user].give_cost+= cost/share_uesr.length;
+                }
+            }
+        }
+    }
+
+
+    // function share_switch_change(){
+    //     $("#user_select").change(function(){
+    //         var selete_user = $('#user_select').val()
+    //         // console.log("你選到",selete_user);
+    //         var  findCheckbox = $('.form-switch');
+    //         [].forEach.call(findCheckbox,function(item,i){
+    //             if(item.id == `Switch_${selete_user}`){ 
+    //                 $(`#Switch_${selete_user}`).addClass("hide")
+    //             }
+    //             else{
+    //                 $(`#Switch_${i}`).removeClass("hide")
+    //             }
+    //         })
+    //     })
+    // }
+    function switch_all(){
+        $('#switch_all').click(function(){
+            var status = $('#switch_all').prop('checked');
+            // console.log(status);
+            var  findCheckbox = $('.form-switch input');
+            if(status){
+                findCheckbox.prop('checked',true)
+            }else{
+                findCheckbox.prop('checked',false)
+            }
+        })
+    }
+
+    
+    function switch_change(){
+        $('input[role=switch]').off('click').click(function(){
+            var current_switch = $('input[role=switch]');
+            var status = [];
+            for(let i = 0 ; i < current_switch.length ; i++){
+               if(current_switch[i].checked){
+                status.push(current_switch[i])
+               }
+            }
+            if(status.length == current_switch.length){
+                $('#switch_all').prop('checked',true)
+            }
+            else{
+                $('#switch_all').prop('checked',false);
+            }
+        })
     }
 
 </script>
