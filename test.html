@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </head>
 
 <style>
@@ -91,9 +92,26 @@
                <p id="pay_someone_block"></p>
             </div>
         </div>
+
     </div>
-
-
+    
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">輸入錯誤</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
     
 </body>
 </html>
@@ -129,10 +147,8 @@
         // 全選
         switch_all()
 
-
         //分攤人員 switch
-        // share_switch_change()
-        
+        // share_switch_change()    
     })
     // 結帳
     function checkout(){
@@ -162,6 +178,7 @@
             var cost_total =  Number(sessionStorage.getItem("cost_total"));
             var user_arr = get_user_data()
             var cost = Number( $('#cost').val() )
+            // console.log(cost);
             var item_list = $('#item_list').val()
             var selete_user = $('#user_select').val()
             var switch_user = $('.form-switch')
@@ -179,10 +196,12 @@
                 }
             }
 
-            if( cost < 0 || isNaN(cost)){
-                alert('請檢查 金額欄位 是否輸入正確資料')
+            if( cost <= 0 || isNaN(cost)){
+               var err_msg='請檢查 金額欄位 是否輸入正確資料'
+                call_modal(err_msg)
             }else if(share_uesr.length == 0){
-                alert('請檢查 分攤人員 是否 勾選')
+                var err_msg='請檢查 分攤人員 是否 勾選'
+                call_modal(err_msg)
             }else{
                 // console.log("你選到",selete_user);
                 var findIndex = user_arr.findIndex(item => item.id == selete_user)
@@ -368,6 +387,11 @@
                 $('#switch_all').prop('checked',false);
             }
         })
+    }
+
+    function call_modal(err_msg){
+        $('.modal-body').text('').append(err_msg)
+        $('#errorModal').modal('show')
     }
 
 </script>
