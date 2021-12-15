@@ -164,7 +164,6 @@
             var cost = Number( $('#cost').val() )
             var item_list = $('#item_list').val()
             var selete_user = $('#user_select').val()
-            
             var switch_user = $('.form-switch')
             var share_uesr = [];
             for(let i = 0 ; i < switch_user.length ; i++){
@@ -180,24 +179,29 @@
                 }
             }
 
-
-            // console.log("你選到",selete_user);
-            var findIndex = user_arr.findIndex(item => item.id == selete_user)
-            // console.log(findIndex);
-            $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost} ===> 分攤人員有 : ${share_str}</li> `)
-            cost_total += cost //總金額
-            user_arr[findIndex].cost+=cost;//個人帳戶金額
-            $('#item_list,#cost').val("")
-            $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
-
-            // set_give_cost(user_arr,selete_user,cost)
-            set_give_cost_new(user_arr,selete_user,cost,share_uesr)
-            store_user_data(user_arr);
-            // console.log("我新增一筆",user_arr);
-
-            // 按下結帳後,再新增項目時,先把結帳資訊清空
-            $("#pay_someone_block,#avg_cost").text('')
-            sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
+            if( cost < 0 || isNaN(cost)){
+                alert('請檢查 金額欄位 是否輸入正確資料')
+            }else if(share_uesr.length == 0){
+                alert('請檢查 分攤人員 是否 勾選')
+            }else{
+                // console.log("你選到",selete_user);
+                var findIndex = user_arr.findIndex(item => item.id == selete_user)
+                // console.log(findIndex);
+                $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost} ===> 分攤人員有 : ${share_str}</li> `)
+                cost_total += cost //總金額
+                user_arr[findIndex].cost+=cost;//個人帳戶金額
+                $('#item_list,#cost').val("")
+                $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+    
+                // set_give_cost(user_arr,selete_user,cost)
+                set_give_cost_new(user_arr,selete_user,cost,share_uesr)
+                store_user_data(user_arr);
+                // console.log("我新增一筆",user_arr);
+    
+                // 按下結帳後,再新增項目時,先把結帳資訊清空
+                $("#pay_someone_block,#avg_cost").text('')
+                sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
+            }
         })
     }
     // 刪除項目
