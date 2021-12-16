@@ -43,12 +43,12 @@
                     </select>
                 </div>
             </div>
-            <div class="col-6 col-md-4 mt-3">
+            <div class="col-7 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目">
                 </div>
             </div>
-            <div class="col-6  col-md-4 mt-3">
+            <div class="col-5  col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text">NT$</span>
                     <input type="text" class="form-control" id="cost" placeholder="" >
@@ -72,6 +72,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <ul id="cost_list" class="list-group list-group-numbered">
+                    <!-- append -->
                 </ul>
             </div>
         </div>
@@ -79,7 +80,7 @@
 
         <!-- <hr> -->
 
-        <button class="btn btn-outline-danger my-4" type="button" id="Checkout">結帳</button>
+        <button class="btn btn-outline-danger my-4" type="button" id="Checkout" disabled >結帳</button>
         <div class="row">
             <div class="col-12">
                 <p id="total_cost"></p>
@@ -146,6 +147,9 @@
         
         // 全選
         switch_all()
+
+        // unlock checkout
+        unlock_checkout()
 
         //分攤人員 switch
         // share_switch_change()    
@@ -219,6 +223,8 @@
     
                 // 按下結帳後,再新增項目時,先把結帳資訊清空
                 $("#pay_someone_block,#avg_cost").text('')
+                unlock_checkout()
+
                 sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
             }
         })
@@ -392,6 +398,13 @@
     function call_modal(err_msg){
         $('.modal-body').text('').append(err_msg)
         $('#errorModal').modal('show')
+    }
+
+    function unlock_checkout(){
+        var list_count = $('#cost_list li')
+        if(list_count.length == 1){
+            $('#Checkout').removeAttr('disabled')
+        }
     }
 
 </script>
