@@ -35,26 +35,26 @@
         </div>
 
         <div class="row">
-            <div class="col mt-3">
-                <div class="input-group mb-3" style="width: 250px;">
+            <div class="col-12 col-md-4 mt-3">
+                <div class="input-group mb-3">
                     <button class="btn btn-outline-secondary" type="button" id="add_list"><i class="bi bi-plus-lg"></i></button>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
                     </select>
                 </div>
             </div>
-            <div class="col mt-3">
+            <div class="col-6 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目">
                 </div>
             </div>
-            <div class="col mt-3">
+            <div class="col-6  col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text">NT$</span>
                     <input type="text" class="form-control" id="cost" placeholder="" >
                 </div> 
             </div>
-            <div class="col mt-3" id="pay_share">
+            <div class="col-12 mt-3" id="pay_share">
                 分攤人員: 
                 <div class="form-check hide" id="switch_all_block">
                     <input class="form-check-input" type="checkbox" id="switch_all">
@@ -270,7 +270,7 @@
         var user_name = $('#user_name').val()
         $('#user_block').append(
             `
-            <div class="col mt-3" id=del_${user_count}>
+            <div class="col-6 col-md-4 mt-3" id=del_${user_count}>
                 <div class="input-group ">
                     <span class="btn btn-danger" id="${user_count}"><i class="bi bi-dash-lg"></i></span>
                     <input type="text" class="form-control me-3" value= ${user_name} disabled>
