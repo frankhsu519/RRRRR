@@ -82,10 +82,11 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   
 </body>
 </html>
+<script src="./index.js"></script>
 <script>
   $(document).ready(function(){
     init()
@@ -93,8 +94,9 @@
 
   // 初始化
   function init(){
-      $('.nav.nav-tabs .nav-link').on('click',function(){
+      $('.nav-link').on('click',function(){
         $('.nav.nav-tabs .nav-link').removeClass('active')
+        debugger
         $(this).addClass('active')
         console.log($(this).parent().index())
         var current_active_index = $(this).parent().index()
@@ -109,6 +111,8 @@
           update_user_data()
         }
       })
+      $
+
     }
   window.user_list = []
   // 渲染畫面
