@@ -12,7 +12,7 @@
   <div class="user_add">
     <div class="input-group flex-nowrap">
       <span class="input-group-text" id="addon-wrapping"><i class="bi bi-person-circle"></i></span>
-      <input id="user_name" type="text" class="form-control" placeholder="請輸入使用者姓名" aria-label="Username" aria-describedby="addon-wrapping">
+      <input id="user_name" type="text" class="form-control" placeholder="請輸入使用者姓名"  aria-label="Username" aria-describedby="addon-wrapping">
       <button type="button" class="btn btn-secondary" id="add_user_btn"><i class="bi bi-plus"></i></button>
     </div>
   </div>
@@ -96,7 +96,7 @@
   function init(){
       $('.nav-link').on('click',function(){
         $('.nav.nav-tabs .nav-link').removeClass('active')
-        debugger
+        
         $(this).addClass('active')
         console.log($(this).parent().index())
         var current_active_index = $(this).parent().index()
@@ -187,11 +187,14 @@
   // 更新資料
   function update_user_data(user_list){
     var result = []
-
-    var user = $('#user_name').val()
+    var user = $('#user_name').val().trim()
+    if(user.length <= 0 || checkInp(user)){
+      return
+    }
 
     var each_person_wallet =  {
       name: user,
+      // name: `使用者${user}`,
       cost_item: [],
       my_cost: [],
       who_owes_me:[]
@@ -205,6 +208,18 @@
     $('#user_name').val('')
     updata_psersons_owes_me_money_person()
     render(window.user_list)
+  }
+
+  function checkInp(value){
+    // var x=document.forms["myForm"]["age"].value;
+    if (isNaN(value[0])) {
+      // alert('ok')
+      return false;
+    }else{
+      alert("請不要以數字開頭作為使用者名稱");
+      $('#user_name').val('')
+      return true;
+    }
   }
 
   // 更新參與均分者
