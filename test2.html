@@ -102,13 +102,8 @@
 
   // 初始化
   function init(){
-      $('.nav-link').on('click',function(){
-        open_wallet_of($(this))
-      })
 
-      $('.user_select--mobile').on('click', function(){
-
-      })
+    open_wallet_of()
 
       $('#add_user_btn').on('click', function(){
         update_user_data()
@@ -123,11 +118,13 @@
     }
   window.user_list = []
   // 開啟該使用者的錢包
-  function open_wallet_of(this_user){
-    $('.nav.nav-tabs .nav-link').removeClass('active')
-    this_user.addClass('active')
-    var current_active_index = this_user.parent().index()
-    $('#user_wallet_content div').eq(current_active_index).addClass('active')
+  function open_wallet_of(){
+      $('.user_select--mobile').on('change', function (e) {
+        var position_of_option = $(this).find('option:selected').index()-1;
+        console.log($('#user_wallet_tab li').eq(position_of_option))
+        $('#user_wallet_tab li').eq(position_of_option).find('button').tab('show');
+        // debugger
+    });
   }
   // 渲染畫面
   function render(user_list){
