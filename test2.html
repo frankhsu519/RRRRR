@@ -201,6 +201,14 @@
       find_who_cost_item(name)
     })
   }
+  // cost item enter切換
+  function cost_item_enter_switch(){
+    // www_costitem
+    var cost_items = $('input[id$="_costitem"]')
+    var cost_amounts = $('input[id$="_costnumber"]')
+    console.log(cost_items, cost_amounts);
+  }
+    
 
   // 更新資料
   function update_user_data(user_list){
@@ -226,6 +234,8 @@
     $('#user_name').val('')
     updata_psersons_owes_me_money_person()
     render(window.user_list)
+
+    cost_item_enter_switch()
   }
 
   function checkInp(value){
