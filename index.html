@@ -28,9 +28,15 @@
     h1.h1 {
         font-size: 32px;
     }
+    .btn-success.no-pointer {
+        cursor:auto;
+    }
 </style>
 
 <body>
+    <!-- <div class="alert alert-danger user_alert" role="alert">
+        分帳人不可為空！
+      </div> -->
     <nav class="navbar navbar-light bg-dark">
         <h1 class="navbar-brand mb-0 text-light h1 px-4">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>
       </nav>
@@ -56,25 +62,30 @@
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <!-- <button class="btn btn-outline-secondary" type="button" id="add_list"><i class="bi bi-plus-lg"></i></button> -->
+                    <label class="btn btn-success no-pointer">代墊付款人</label>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
                     </select>
-                    <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
+                    <!-- <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button> -->
                 </div>
             </div>
             <div class="col-7 col-md-4 mt-3">
                 <div class="input-group mb-3">
+                    <label class="btn btn-success no-pointer">請輸入花費項目</label>
                     <input alt="分帳項目" type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目">
                 </div>
             </div>
             <div class="col-5  col-md-4 mt-3">
                 <div class="input-group mb-3">
+                    <label class="btn btn-success no-pointer">請輸入金額</label>
                     <span class="input-group-text">NT$</span>
                     <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
+                    <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
                 </div> 
             </div>
             <div class="col-12 mt-3" id="pay_share">
-                分攤人員: 
+                
+                <label class="btn btn-success no-pointer">分攤人員: </label>
                 <div class="form-check hide" id="switch_all_block">
                     <input alt="大家一起均分" class="form-check-input" type="checkbox" id="switch_all">
                     <label class="form-check-label" for="switch_all">全選</label>
@@ -148,6 +159,10 @@
 
         // 新增user
         $('#add_user').click(function(){
+            if($('#user_name').val() == ''){
+                alert('分帳人不可為空')
+                return
+            }
             add_user_data(user_count)
             render(user_count)  // 渲染畫面
 
@@ -156,6 +171,22 @@
 
             user_count++;
             sessionStorage.setItem("user_count", `${user_count}`);
+        })
+        $('#user_name').on('keypress', function(e){
+            if (e.keyCode == 13) {
+                if($('#user_name').val() == ''){
+                    alert('分帳人不可為空')
+                    return
+                }
+                add_user_data(user_count)
+                render(user_count)  // 渲染畫面
+    
+                // 刪除
+                delete_user(user_count)
+    
+                user_count++;
+                sessionStorage.setItem("user_count", `${user_count}`);
+            }
         })
 
         // 新增項目
