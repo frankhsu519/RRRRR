@@ -168,7 +168,8 @@
         // 新增user
         $('#add_user').click(function(){
             if($('#user_name').val().trim() == ''){
-                alert('分帳人不可為空')
+                var err_msg='參與分帳人姓名 不能為空'
+                call_modal(err_msg)
                 return
             }
             add_user_data(user_count)
@@ -183,7 +184,8 @@
         $('#user_name').on('keypress', function(e){
             if (e.keyCode == 13) {
                 if($('#user_name').val().trim() == ''){
-                    alert('分帳人不可為空')
+                    var err_msg='參與分帳人姓名 不能為空'
+                    call_modal(err_msg)
                     return
                 }
                 add_user_data(user_count)
@@ -276,9 +278,9 @@
             var switch_user = $('.attend_user')
             var share_uesr = [];
             for(let i = 0 ; i < switch_user.length ; i++){
-               if(switch_user[i].children[0].checked){
-                share_uesr.push(switch_user[i])
-               }
+                if(switch_user[i].children[0].checked){
+                    share_uesr.push(switch_user[i])
+                }
             }
             var share_str ='';
             for(let i = 0 ; i < share_uesr.length ; i++ ){
@@ -289,7 +291,7 @@
             }
 
             if( cost <= 0 || isNaN(cost)){
-               var err_msg='請檢查 金額欄位 是否輸入正確資料'
+                var err_msg='請檢查 金額欄位 是否輸入正確資料'
                 call_modal(err_msg)
             }else if(share_uesr.length == 0){
                 var err_msg='請檢查 分攤人員 是否 勾選'
