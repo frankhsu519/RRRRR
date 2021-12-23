@@ -34,12 +34,10 @@
 </style>
 
 <body>
-    <!-- <div class="alert alert-danger user_alert" role="alert">
-        分帳人不可為空！
-      </div> -->
     <nav class="navbar navbar-light bg-dark">
-        <h1 class="navbar-brand mb-0 text-light h1 px-4">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>
-      </nav>
+        <h1 class="navbar-brand mb-0 text-light h1 px-4">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>        
+    </nav>
+    
     <div class="container  mt-5">
 
         <div class="row">
@@ -69,22 +67,22 @@
                     <!-- <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button> -->
                 </div>
             </div>
-            <div class="col-7 col-md-4 mt-3">
+            <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <label class="btn btn-success no-pointer">請輸入花費項目</label>
-                    <input alt="分帳項目" type="text" class="form-control me-5" id="item_list" placeholder="請輸入花費項目">
+                    <input alt="分帳項目" type="text" class="form-control " id="item_list" placeholder="請輸入花費項目">
                 </div>
             </div>
-            <div class="col-5  col-md-4 mt-3">
+            <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <label class="btn btn-success no-pointer">請輸入金額</label>
-                    <span class="input-group-text">NT$</span>
+                    <!-- <span class="input-group-text">NT$</span> -->
                     <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
                     <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
                 </div> 
             </div>
             <div class="col-12 mt-3" id="pay_share">
-                <label class="btn btn-success no-pointer">分攤人員: </label>
+                <label class="btn btn-success no-pointer mb-2">分攤人員: </label>
                 <div class="form-check hide form-switch mx-3" id="switch_all_block">
                     <input alt="大家一起均分" class="form-check-input" type="checkbox" id="switch_all">
                     <label class="form-check-label " for="switch_all">全選</label>
@@ -167,7 +165,7 @@
 
         // 新增user
         $('#add_user').click(function(){
-            if($('#user_name').val() == ''){
+            if($('#user_name').val().trim() == ''){
                 alert('分帳人不可為空')
                 return
             }
@@ -182,7 +180,7 @@
         })
         $('#user_name').on('keypress', function(e){
             if (e.keyCode == 13) {
-                if($('#user_name').val() == ''){
+                if($('#user_name').val().trim() == ''){
                     alert('分帳人不可為空')
                     return
                 }
@@ -272,7 +270,7 @@
             // console.log(cost);
             var item_list = $('#item_list').val()
             var selete_user = $('#user_select').val()
-            var switch_user = $('.form-switch')
+            var switch_user = $('.attend_user')
             var share_uesr = [];
             for(let i = 0 ; i < switch_user.length ; i++){
                if(switch_user[i].children[0].checked){
@@ -385,7 +383,7 @@
         // share switch
         $('#pay_share').append(
             `
-            <div class="form-check form-switch mx-3" id=Switch_${user_count}>
+            <div class="form-check form-switch attend_user mx-3" id=Switch_${user_count}>
                     <input class="form-check-input" type="checkbox" role="switch" id="Switch_${user_name}">
                     <label class="form-check-label" for="Switch_${user_name}">${user_name}</label>
             </div>            
