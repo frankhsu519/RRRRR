@@ -172,8 +172,8 @@
                 call_modal(err_msg)
                 return
             }
-            add_user_data(user_count)
-            render(user_count)  // 渲染畫面
+            // add_user_data + render 
+            update_data(user_count)
 
             // 刪除
             delete_user(user_count)
@@ -188,9 +188,9 @@
                     call_modal(err_msg)
                     return
                 }
-                add_user_data(user_count)
-                render(user_count)  // 渲染畫面
-    
+                // add_user_data + render 
+                update_data(user_count)
+
                 // 刪除
                 delete_user(user_count)
     
@@ -215,6 +215,21 @@
         //分攤人員 switch
         // share_switch_change()    
     })
+    function update_data(user_count){
+        var user_name = $('#user_name').val()
+        var user_arr = get_user_data();
+        var all_user_name = []
+        user_arr.forEach(el => {
+            all_user_name.push(el.name)
+        });
+        if(all_user_name.includes(user_name)){
+            var err_msg='分帳人員姓名 已存在 ,請重新輸入'
+            call_modal(err_msg)
+            return
+        }
+        add_user_data(user_count)
+        render(user_count)  // 渲染畫面
+    }
     // 結帳
     function checkout(){
         $('#Checkout').click(function(){
@@ -344,6 +359,7 @@
     function add_user_data(user_count){
         var user_name = $('#user_name').val()
         var user_arr = get_user_data();
+        
         user_arr.push({
                 id:user_count,
                 name:user_name,
@@ -385,8 +401,6 @@
         )
         // 清空輸入框
         $('#user_name').val('')
-
-       
 
         // share switch
         $('#pay_share').append(
@@ -475,9 +489,9 @@
             var current_switch = $('input[role=switch]');
             var status = [];
             for(let i = 0 ; i < current_switch.length ; i++){
-               if(current_switch[i].checked){
+                if(current_switch[i].checked){
                 status.push(current_switch[i])
-               }
+                }
             }
             if(status.length == current_switch.length){
                 $('#switch_all').prop('checked',true)
