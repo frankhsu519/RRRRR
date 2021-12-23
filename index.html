@@ -81,6 +81,7 @@
         <!-- <hr> -->
 
         <button class="btn btn-outline-danger my-4" type="button" id="Checkout" disabled >結帳</button>
+        <button class="btn btn-outline-success my-4" type="button" id="Checkout2">特別</button>
         <div class="row">
             <div class="col-12">
                 <p id="total_cost"></p>
@@ -91,6 +92,14 @@
         <div class="row">
             <div class="col-12">
                <p id="pay_someone_block"></p>
+            </div>
+        </div>
+
+        <!-- <hr> -->
+
+        <div class="row">
+            <div class="col-12">
+               <p id="pay_someone_block2"></p>
             </div>
         </div>
 
@@ -144,6 +153,7 @@
 
         // 結帳
         checkout()
+        checkout2()
         
         // 全選
         switch_all()
@@ -176,6 +186,34 @@
             }
         })
     }
+
+    function checkout2(){
+        $('#Checkout2').click(function(){
+            var user_arr = get_user_data();
+            var cost_total =  Number(sessionStorage.getItem("cost_total"));
+            var user_count = Number(sessionStorage.getItem("user_count"));
+            // console.log('取得資料:' ,get_user_data())
+            // var user_total = $('#user_total').val()
+            // var avg_cost = cost_total /user_count ;
+            // $("#avg_cost").text("").append(`平均每人 : ${avg_cost}`)
+            $("#pay_someone_block2").text('')
+            for(let i= 0 ; i< get_user_data().length ;i++){
+                // $("#pay_someone_block2").append(`${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元<br>` )
+                for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
+                    if(i !== get_user_data()[i].give_someone[j].user_id){
+                        // $("#pay_someone_block2").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${get_user_data()[i].give_someone[j].give_cost} <br>`)
+                        var tmp = get_user_data()[i].give_someone[j].give_cost - get_user_data()[j].give_someone[i].give_cost;
+                        if(tmp>0){
+                            $("#pay_someone_block2").append(`${get_user_data()[i].name} 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${tmp} <br>`)
+                        }
+                        console.log("看看差距",tmp);
+                    }
+                }
+                $("#pay_someone_block2").append(`<hr>`)
+            }
+        })
+    }
+
     // 新增項目
     function add_item(){
         $('#add_list').click(function(){
