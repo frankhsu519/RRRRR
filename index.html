@@ -53,20 +53,20 @@
         </div>
 
         <hr>
-
-        <div class="row mb-4" id="user_block">
+        <!-- 暫時註解調 毀滅區不要時 要把註解解開-->
+        <!-- <div class="row mb-4" id="user_block"> -->
             <!-- append -->
-        </div>
+        <!-- </div> -->
+        <!-- 暫時註解調 -->
 
-        <div class="row">
+
+        <!-- <div class="row">
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
-                    <!-- <button class="btn btn-outline-secondary" type="button" id="add_list"><i class="bi bi-plus-lg"></i></button> -->
                     <label class="btn btn-success no-pointer">代墊付款人</label>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
                     </select>
-                    <!-- <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button> -->
                 </div>
             </div>
             <div class="col-12 col-md-4 mt-3">
@@ -78,7 +78,6 @@
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
                     <label class="btn btn-success no-pointer">請輸入金額</label>
-                    <!-- <span class="input-group-text">NT$</span> -->
                     <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
                     <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
                 </div> 
@@ -89,12 +88,49 @@
                     <input alt="大家一起均分" class="form-check-input" type="checkbox" id="switch_all">
                     <label class="form-check-label " for="switch_all">全選</label>
                 </div>
-                <!-- <div class="form-check form-switch mx-3">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-                </div> -->
             </div>    
+        </div> -->
+
+
+        <!-- 毀滅 -->
+        
+        <div class="row" style="border: 1px solid red;">
+            <div class="col mt-3">
+                <div class="input-group mb-3">
+                    <label class="btn btn-success no-pointer">代墊付款人</label>
+                    <select class="form-select" id="user_select">
+                        <option selected disabled>請選擇代墊付款人</option>
+                    </select>
+                </div>
+
+                <div class="row mb-4" id="user_block">
+                    <!-- append -->
+                </div>
+            </div>
+           
+            
+            <div class="col mt-3" id="pay_share">
+                <label class="btn btn-success no-pointer mb-2">分攤人員: </label>
+                <div class="form-check hide form-switch mx-3" id="switch_all_block">
+                    <input alt="大家一起均分" class="form-check-input" type="checkbox" id="switch_all">
+                    <label class="form-check-label " for="switch_all">全選</label>
+                </div>
+            </div>
+            
+            <div class="col mt-3">
+                <div class="input-group mb-3">
+                    <label class="btn btn-success no-pointer">請輸入花費項目</label>
+                    <input alt="分帳項目" type="text" class="form-control " id="item_list" placeholder="請輸入花費項目">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="btn btn-success no-pointer">請輸入金額</label>
+                    <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
+                    <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            
         </div>
+        <!-- 毀滅 End -->
 
         <hr>
 
@@ -414,7 +450,7 @@
         var user_name = $('#user_name').val()
         $('#user_block').append(
             `
-            <div class="col-6 col-md-4 mt-3" id=del_${user_count}>
+            <div class="col-12 mt-3" id=del_${user_count}>
                 <div class="input-group ">
                     <span class="btn btn-danger" id="${user_count}"><i class="bi bi-dash-lg"></i></span>
                     <input type="text" class="form-control me-3" value= ${user_name} disabled>
