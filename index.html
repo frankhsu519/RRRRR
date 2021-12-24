@@ -343,6 +343,26 @@
             var user_arr = get_user_data()
             var delete_id = $(this).attr('id')
             console.log('我點到誰',delete_id);
+            var return_arr_index = user_arr.findIndex(el=>{
+                return el.id == delete_id 
+            })
+            var err_msg = "" 
+            for(let i = 0 ; i < user_arr.length ; i++){
+
+                console.log(user_arr[return_arr_index].give_someone[i].give_cost);
+            
+                if(user_arr[return_arr_index].give_someone[i].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
+                    err_msg +=`【 ${user_arr[return_arr_index].name} (你) 】 與 【 ${user_arr[return_arr_index].give_someone[i].user_name} 】還有 一些 金錢 曖昧不清楚 ( ${user_arr[return_arr_index].give_someone[i].give_cost} 元 )<br>`  
+                }else if(user_arr[i].give_someone[return_arr_index].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
+                    err_msg += `【 ${user_arr[i].name} 】 還有 ${user_arr[i].give_someone[return_arr_index].give_cost} 元 沒給  【 ${user_arr[return_arr_index].name} (你)  】<br>`
+                }
+                
+            }
+            if ( err_msg != ""){
+                call_modal(err_msg)
+                return
+            }
+
             for(let i= 0 ; i < user_arr.length ;i++ ){
                 if(user_arr[i].id == delete_id){
                     user_arr.splice(i,1)
