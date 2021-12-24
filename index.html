@@ -244,7 +244,7 @@
             for(let i= 0 ; i< get_user_data().length ;i++){
                 $("#pay_someone_block2").append(`【 ${get_user_data()[i].name} 】 區域 <br>`)
                 for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
-                    if(i !== get_user_data()[i].give_someone[j].user_id){
+                    if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
                         var tmp = get_user_data()[i].give_someone[j].give_cost - get_user_data()[j].give_someone[i].give_cost;
                         if(tmp > 0){
                             $("#pay_someone_block2").append(` 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${tmp} 元<br>`)
@@ -271,7 +271,7 @@
             for(let i= 0 ; i< get_user_data().length ;i++){
                 $("#pay_someone_block").append(`${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元<br>` )
                 for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
-                    if(i !== get_user_data()[i].give_someone[j].user_id){
+                    if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
                         $("#pay_someone_block").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${get_user_data()[i].give_someone[j].give_cost} <br>`)
                     }
                 }
@@ -322,7 +322,7 @@
                 $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
     
                 // set_give_cost(user_arr,selete_user,cost)
-                set_give_cost_new(user_arr,selete_user,cost,share_uesr)
+                set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
                 store_user_data(user_arr);
                 // console.log("我新增一筆",user_arr);
     
@@ -347,19 +347,21 @@
                 return el.id == delete_id 
             })
             var err_msg = "" 
+            var err_msg_owned = ""
             for(let i = 0 ; i < user_arr.length ; i++){
 
                 console.log(user_arr[return_arr_index].give_someone[i].give_cost);
             
                 if(user_arr[return_arr_index].give_someone[i].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
                     err_msg +=`【 ${user_arr[return_arr_index].name} (你) 】 與 【 ${user_arr[return_arr_index].give_someone[i].user_name} 】還有 一些 金錢 曖昧不清楚 ( ${user_arr[return_arr_index].give_someone[i].give_cost} 元 )<br>`  
-                }else if(user_arr[i].give_someone[return_arr_index].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
-                    err_msg += `【 ${user_arr[i].name} 】 還有 ${user_arr[i].give_someone[return_arr_index].give_cost} 元 沒給  【 ${user_arr[return_arr_index].name} (你)  】<br>`
+                }
+                if(user_arr[i].give_someone[return_arr_index].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
+                    err_msg_owned += `【 ${user_arr[i].name} 】 還有 ${user_arr[i].give_someone[return_arr_index].give_cost} 元 沒給  【 ${user_arr[return_arr_index].name} (你)  】<br>`
                 }
                 
             }
             if ( err_msg != ""){
-                call_modal(err_msg)
+                call_modal(err_msg+err_msg_owned)
                 return
             }
 
@@ -368,8 +370,15 @@
                     user_arr.splice(i,1)
                 }
             }
+
+            for(let i = 0 ; i <user_arr.length ; i++){
+                user_arr[i].give_someone.splice(return_arr_index,1)
+            }
+
+
             $(this).closest(`#del_${delete_id}`).remove();
             $(`#user_select option[value=${delete_id}]`).remove()
+            $(`#Switch_${delete_id}`).remove()
             console.log("現在剩下",user_arr);
             store_user_data(user_arr);
             })
@@ -464,11 +473,11 @@
     //     }
     // }
 
-    function set_give_cost_new(user_arr,selete_user,cost,share_uesr){
+    function set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex){
         for(let i = 0 ; i < share_uesr.length ; i++){
             for(let j = 0; j < user_arr.length ; j++ ){
                 if(share_uesr[i].innerText == user_arr[j].name){
-                    user_arr[j].give_someone[selete_user].give_cost+= cost/share_uesr.length;
+                    user_arr[j].give_someone[findIndex].give_cost+= cost/share_uesr.length;
                 }
             }
         }
