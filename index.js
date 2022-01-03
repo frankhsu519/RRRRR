@@ -19,7 +19,7 @@ $(document).ready(function(){
 
         // 刪除
         delete_user(user_count)
-        
+
         user_count++;
         sessionStorage.setItem("user_count", `${user_count}`);
     })
@@ -187,7 +187,19 @@ function add_item(){
             // console.log("你選到",selete_user);
             var findIndex = user_arr.findIndex(item => item.id == selete_user)
             // console.log(findIndex);
-            $('#cost_list').append(`<li class='list-group-item'>${user_arr[findIndex].name} - ${item_list} - NT$${cost} ===> 分攤人員有 : ${share_str}</li> `)
+            $('#cost_list').append(`
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
+                                            購買項目 : ${item_list} <br> 
+                                            NT$${cost} ===> 分攤人員有 : ${share_str}
+                                        </div>
+                                        <button type="button" class="btn btn-danger align-self-center">
+                                            <i class="bi bi-trash"></i>
+                                        </button>   
+                                    </li>
+                                    `)
+                                    
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
             $('#item_list,#cost').val("")
