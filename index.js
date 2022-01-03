@@ -9,9 +9,9 @@ $(document).ready(function(){
 
     // 新增user
     $('#add_user').click(function(){
-        if($('#user_name').val().trim() == ''){
-            var err_msg='參與分帳人姓名 不能為空'
-            call_modal(err_msg)
+        if(ifUserNameEmpty()){
+            return
+        } else if (verifyIDuplicated()){
             return
         }
         // add_user_data + render 
@@ -19,15 +19,15 @@ $(document).ready(function(){
 
         // 刪除
         delete_user(user_count)
-
+        
         user_count++;
         sessionStorage.setItem("user_count", `${user_count}`);
     })
     $('#user_name').on('keypress', function(e){
         if (e.keyCode == 13) {
-            if($('#user_name').val().trim() == ''){
-                var err_msg='參與分帳人姓名 不能為空'
-                call_modal(err_msg)
+            if(ifUserNameEmpty()){
+                return
+            } else if (verifyIDuplicated()){
                 return
             }
             // add_user_data + render 
@@ -60,6 +60,34 @@ $(document).ready(function(){
     set_user_split_by_memte_select()
 })
 function update_data(user_count){
+    // var user_name = $('#user_name').val()
+    // var user_arr = get_user_data();
+    // var all_user_name = []
+    // user_arr.forEach(el => {
+    //     all_user_name.push(el.name)
+    // });
+    // if(all_user_name.includes(user_name)){
+    //     var err_msg='分帳人員姓名 已存在 ,請重新輸入'
+    //     call_modal(err_msg)
+    //     return
+    // }
+    if(!verifyIDuplicated()){
+        add_user_data(user_count)
+        render(user_count)  // 渲染畫面
+    }
+}
+
+function ifUserNameEmpty(){
+    if($('#user_name').val().trim() == ''){
+        var err_msg='參與分帳人姓名 不能為空'
+        call_modal(err_msg)
+        return true
+    } else {
+        return false
+    }
+}
+
+function verifyIDuplicated(){
     var user_name = $('#user_name').val()
     var user_arr = get_user_data();
     var all_user_name = []
@@ -69,10 +97,10 @@ function update_data(user_count){
     if(all_user_name.includes(user_name)){
         var err_msg='分帳人員姓名 已存在 ,請重新輸入'
         call_modal(err_msg)
-        return
+        return true
+    } else {
+        return false
     }
-    add_user_data(user_count)
-    render(user_count)  // 渲染畫面
 }
 // 結帳
 function checkout(){
