@@ -45,7 +45,16 @@ $(document).ready(function(){
     unlock_checkout()
 
     set_user_split_by_memte_select()
+
+    // 註冊分享事件
+    $('#share_btn').on('click', share)
+
 })
+
+function share(){
+    alert('share!')
+}
+
 function add_user(){
     var user_count = sessionStorage.getItem("user_count");
     if(ifUserNameEmpty()){
@@ -419,8 +428,4 @@ function unlock_checkout(){
     if(list_count.length == 1){
         $('#Checkout').removeAttr('disabled')
     }
-}
-
-function share(){
-
 }
