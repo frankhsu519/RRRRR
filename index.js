@@ -3,9 +3,11 @@ $(document).ready(function(){
     sessionStorage.setItem("user_arr", "[]");
     sessionStorage.setItem("user_count", "0");
     sessionStorage.setItem("cost_total", "0");
-    // var user_arr = [];
+    sessionStorage.setItem("cost_list","[]");
+    sessionStorage.setItem("cost_list_count", "0");
+
     var user_count = Number(sessionStorage.getItem("user_count"));
-    // var cost_total = 0 ;
+    var cost_list_count = Number(sessionStorage.getItem("cost_list_count"));
 
     // 新增user
     $('#add_user').click(function(){
@@ -32,7 +34,7 @@ $(document).ready(function(){
     })
 
     // 新增項目
-    add_item()
+    add_item(cost_list_count)
 
     // 結帳
     checkout()
@@ -190,7 +192,7 @@ function show_checkout_detail(){
 }
 
 // 新增項目
-function add_item(){
+function add_item(cost_list_count){
     $('#add_list').click(function(){
         var cost_total =  Number(sessionStorage.getItem("cost_total"));
         var user_arr = get_user_data()
@@ -224,18 +226,21 @@ function add_item(){
             var findIndex = user_arr.findIndex(item => item.id == selete_user)
             // console.log(findIndex);
             $('#cost_list').append(`
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
                                         <div class="ms-2 me-auto">
                                             <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
                                             購買項目 : ${item_list} <br> 
                                             NT$${cost} ===> 分攤人員有 : ${share_str}
                                         </div>
-                                        <button type="button" class="btn btn-danger align-self-center">
+                                        <button type="button" class="btn btn-danger align-self-center delete_list">
                                             <i class="bi bi-trash"></i>
                                         </button>   
                                     </li>
                                     `)
-                                    
+            delete_list()
+
+            set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
+
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
             $('#item_list,#cost').val("")
@@ -253,6 +258,8 @@ function add_item(){
             $("#pay_someone_block").css('display',"none")
             unlock_checkout()
 
+            cost_list_count++;
+            sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
             sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
         }
     })
@@ -303,6 +310,62 @@ function delete_user(user_count){
         store_user_data(user_arr);
         })
 }
+
+function delete_list(){
+    
+    $('.delete_list').off('click').click(function(){
+        alert('我要山囉');
+        var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
+        var user_arr = JSON.parse(sessionStorage.getItem('user_arr'))
+        var delete_list_id = $(this).closest('li').attr('id')
+        var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        var findIndex = cost_list.findIndex(item=>{
+            return item.list_id == delete_list_id
+        })
+
+        var index = user_arr.findIndex( item => {
+            return item.id == cost_list[findIndex].selete_user
+        })
+        user_arr[index].cost -= cost_list[findIndex].cost
+        sessionStorage.setItem('user_arr',JSON.stringify(user_arr))
+
+        retrun_give_cost(cost_list,delete_list_id,user_arr)
+
+        cost_total-= cost_list[findIndex].cost
+        $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+        sessionStorage.setItem('cost_total',JSON.stringify(cost_total))
+
+        cost_list.splice(findIndex,1)
+        $(this).closest('li').remove()
+        sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+        
+    })
+    
+}
+
+function retrun_give_cost(cost_list,delete_list_id,user_arr){
+    console.log("你有東西嗎 :",cost_list);
+    console.log("阿你哩 ? ",delete_list_id);
+    var index = cost_list.findIndex( item => {
+        return item.list_id == delete_list_id
+    })
+    var find_user_arr_index = user_arr[0].give_someone.findIndex( item => {
+        return item.user_id == cost_list[index].selete_user
+    })
+
+    for( let i = 0 ; i < cost_list[index].share_uesr.length ; i++){
+        for( let j = 0 ; j < user_arr.length ;j++ ){
+            if(cost_list[index].share_uesr[i] == user_arr[j].name){
+                user_arr[j].give_someone[find_user_arr_index].give_cost -= cost_list[index].cost/cost_list[index].share_uesr.length
+            }
+        }
+    }
+    sessionStorage.setItem('user_arr',JSON.stringify(user_arr))
+
+}
+
+
+
 
 // 更新使用者資料
 function add_user_data(user_count){
@@ -419,6 +482,42 @@ function set_user_split_by_memte_select(){
     })
 }
 
+function set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count){
+    var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
+    cost_list.push({
+            selete_user,
+            item_list,
+            share_uesr: set_share_user(share_uesr),
+            cost,
+            list_id:`list_${cost_list_count}`
+        })
+    console.log('我砍看裡面放了什麼',cost_list);
+    sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+}
+
+function set_share_user(share_uesr){
+    var result=[];
+    share_uesr.forEach(item=>{
+        result.push(item.innerText)
+    })
+    return result
+}
+
+// function share_switch_change(){
+//     $("#user_select").change(function(){
+//         var selete_user = $('#user_select').val()
+//         // console.log("你選到",selete_user);
+//         var  findCheckbox = $('.form-switch');
+//         [].forEach.call(findCheckbox,function(item,i){
+//             if(item.id == `Switch_${selete_user}`){ 
+//                 $(`#Switch_${selete_user}`).addClass("hide")
+//             }
+//             else{
+//                 $(`#Switch_${i}`).removeClass("hide")
+//             }
+//         })
+//     })
+// }
 function switch_all(){
     $('#switch_all').click(function(){
         var status = $('#switch_all').prop('checked');
