@@ -52,7 +52,10 @@ $(document).ready(function(){
 })
 
 function share(){
-    alert('share!')
+    var user_data = JSON.stringify(get_user_data())
+    // console.log(user_data, encodeURI(user_data))
+    var url = window.location.href+`?user_data=${encodeURI(user_data)}`
+    console.log(url);
 }
 
 function add_user(){
