@@ -9,35 +9,25 @@ $(document).ready(function(){
 
     // 新增user
     $('#add_user').click(function(){
-        if(ifUserNameEmpty()){
-            return
-        } else if (verifyIDuplicated()){
-            return
-        }
-        // add_user_data + render 
-        update_data(user_count)
+        // if(ifUserNameEmpty()){
+        //     return
+        // } else if (verifyIDuplicated()){
+        //     return
+        // }
+        // // add_user_data + render 
+        // update_data(user_count)
 
-        // 刪除
-        delete_user(user_count)
+        // // 刪除
+        // delete_user(user_count)
 
-        user_count++;
-        sessionStorage.setItem("user_count", `${user_count}`);
+        // user_count++;
+        // console.log(user_count)
+        // sessionStorage.setItem("user_count", `${user_count}`);
+        add_user()
     })
     $('#user_name').on('keypress', function(e){
         if (e.keyCode == 13) {
-            if(ifUserNameEmpty()){
-                return
-            } else if (verifyIDuplicated()){
-                return
-            }
-            // add_user_data + render 
-            update_data(user_count)
-
-            // 刪除
-            delete_user(user_count)
-
-            user_count++;
-            sessionStorage.setItem("user_count", `${user_count}`);
+            add_user()
         }
     })
 
@@ -54,23 +44,28 @@ $(document).ready(function(){
     // unlock checkout
     unlock_checkout()
 
-    //分攤人員 switch
-    // share_switch_change()    
-
     set_user_split_by_memte_select()
 })
+function add_user(){
+    var user_count = sessionStorage.getItem("user_count");
+    if(ifUserNameEmpty()){
+        return
+    } else if (verifyIDuplicated()){
+        return
+    }
+    // add_user_data + render 
+    update_data(user_count)
+
+    // 刪除
+    delete_user(user_count)
+
+    user_count++;
+    console.log(user_count)
+    sessionStorage.setItem("user_count", `${user_count}`);
+}
+
 function update_data(user_count){
-    // var user_name = $('#user_name').val()
-    // var user_arr = get_user_data();
-    // var all_user_name = []
-    // user_arr.forEach(el => {
-    //     all_user_name.push(el.name)
-    // });
-    // if(all_user_name.includes(user_name)){
-    //     var err_msg='分帳人員姓名 已存在 ,請重新輸入'
-    //     call_modal(err_msg)
-    //     return
-    // }
+
     if(!verifyIDuplicated()){
         add_user_data(user_count)
         render(user_count)  // 渲染畫面
@@ -290,7 +285,7 @@ function add_user_data(user_count){
             }
         }
         store_user_data(user_arr);
-        console.log("我新增囉",user_arr);
+        // console.log("我新增囉",user_arr);
 }
 
 // 渲染畫面
@@ -352,12 +347,6 @@ function set_give_someone(use_number, user_arr){
         }
         return result
     }
-// function set_give_cost(user_arr,selete_user,cost){
-//     // console.log("set_give_cost",cost);
-//     for(let i= 0 ;i<user_arr.length; i++){
-//         user_arr[i].give_someone[selete_user].give_cost+= cost/user_arr.length;
-//     }
-// }
 
 function set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex){
     for(let i = 0 ; i < share_uesr.length ; i++){
@@ -389,22 +378,6 @@ function set_user_split_by_memte_select(){
     })
 }
 
-
-// function share_switch_change(){
-//     $("#user_select").change(function(){
-//         var selete_user = $('#user_select').val()
-//         // console.log("你選到",selete_user);
-//         var  findCheckbox = $('.form-switch');
-//         [].forEach.call(findCheckbox,function(item,i){
-//             if(item.id == `Switch_${selete_user}`){ 
-//                 $(`#Switch_${selete_user}`).addClass("hide")
-//             }
-//             else{
-//                 $(`#Switch_${i}`).removeClass("hide")
-//             }
-//         })
-//     })
-// }
 function switch_all(){
     $('#switch_all').click(function(){
         var status = $('#switch_all').prop('checked');
@@ -417,7 +390,6 @@ function switch_all(){
         }
     })
 }
-
 
 function switch_change(){
     $('input[role=switch]').off('click').click(function(){
@@ -447,4 +419,8 @@ function unlock_checkout(){
     if(list_count.length == 1){
         $('#Checkout').removeAttr('disabled')
     }
+}
+
+function share(){
+
 }
