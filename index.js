@@ -51,11 +51,40 @@ $(document).ready(function(){
 
 })
 
+function copy_by_click(input_element){
+    console.log(input_element);
+
+    var copyText = input_element[0];
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  
+     /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+  
+    /* Alert the copied text */
+    // alert("Copied the text: " + copyText.value);
+
+}
+
 function share(){
     var user_data = JSON.stringify(get_user_data())
     // console.log(user_data, encodeURI(user_data))
     var url = window.location.href+`?user_data=${encodeURI(user_data)}`
-    console.log(url);
+    var template = `
+        <div class="d-flex justify-content-between">
+            <input class="url_input" value="${url}"></input>
+            <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn">複製連結</button>
+        </div>`
+    // console.log(url);
+
+    call_modal(template, 'share')
+    // 註冊一鍵複製事件
+    $('#copy_btn').off('click')
+    $('#copy_btn').on('click', function(){
+        copy_by_click($(this).parent().find('.url_input'))
+    })
 }
 
 function add_user(){
@@ -421,8 +450,13 @@ function switch_change(){
     })
 }
 
-function call_modal(err_msg){
+function call_modal(err_msg, type){
     $('.modal-body').text('').append(err_msg)
+    if( type == 'share') {
+        $('#errorModalLabel').text('分享計算結果')
+    }else {
+        $('#errorModalLabel').text('輸入錯誤')
+    }
     $('#errorModal').modal('show')
 }
 
