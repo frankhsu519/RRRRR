@@ -52,7 +52,7 @@ $(document).ready(function(){
     $('#share_btn').on('click', share)
 
     // 取得紀錄資料
-    get_record_data()
+    if(window.location.href.split('record_data=').length>1) get_record_data()
 })
 
 function get_record_data(){
