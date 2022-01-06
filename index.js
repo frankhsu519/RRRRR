@@ -51,7 +51,18 @@ $(document).ready(function(){
     // 註冊分享事件
     $('#share_btn').on('click', share)
 
+    // 取得紀錄資料
+    get_record_data()
 })
+
+function get_record_data(){
+    var url = window.location.href.split('record_data=')[1]
+    var record_data = decodeURI(url)
+    console.log(record_data);
+    if(record_data.length > 0){
+        // add_user()
+    }
+}
 
 function copy_by_click(input_element){
     console.log(input_element);
@@ -73,7 +84,7 @@ function copy_by_click(input_element){
 function share(){
     var user_data = JSON.stringify(get_user_data())
     // console.log(user_data, encodeURI(user_data))
-    var url = window.location.href+`?user_data=${encodeURI(user_data)}`
+    var url = window.location.href+`?record_data=${encodeURI(user_data)}`
     var template = `
         <div class="d-flex justify-content-between">
             <input class="url_input" value="${url}"></input>
