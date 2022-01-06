@@ -57,10 +57,11 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
-    var record_data = decodeURI(url)
-    console.log(record_data);
+    var record_data = JSON.parse(decodeURI(url))
+    // console.log(record_data);
     if(record_data.length > 0){
-        // add_user()
+        sessionStorage.setItem("user_arr", decodeURI(url));
+        render_by_record(record_data)
     }
 }
 
@@ -401,6 +402,15 @@ function add_user_data(user_count){
         }
         store_user_data(user_arr);
         // console.log("我新增囉",user_arr);
+}
+// 使用他人紀錄渲染畫面
+function render_by_record(record_data){
+    // console.log(record_data);
+    record_data.forEach(user=>{
+        $('#user_name').val(user.name)
+        render(user.id)
+    })
+    $('#user_name').val('')
 }
 
 // 渲染畫面
