@@ -57,10 +57,10 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
-    var record_data = JSON.parse(decodeURI(url))
+    var record_data = JSON.parse(unescape(decodeURI(url)))
     // console.log(record_data);
     if(record_data.length > 0){
-        sessionStorage.setItem("user_arr", decodeURI(url));
+        sessionStorage.setItem("user_arr", JSON.stringify(record_data));
         render_by_record(record_data)
     }
 }
@@ -85,7 +85,7 @@ function copy_by_click(input_element){
 function share(){
     var user_data = JSON.stringify(get_user_data())
     // console.log(user_data, encodeURI(user_data))
-    var url = window.location.href+`?record_data=${encodeURI(user_data)}`
+    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
     var template = `
         <div class="d-flex justify-content-between">
             <input class="url_input" value="${url}"></input>
