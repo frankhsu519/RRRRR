@@ -57,25 +57,32 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
-    var url_cost =  window.location.href.split('&record_cost=')[1]
+    // var url_cost =  window.location.href.split('&record_cost=')[1]
     var record_data = JSON.parse(unescape(decodeURI(url)))
-    var cost_list =  JSON.parse(unescape(decodeURI(url_cost)))
+    console.log(record_data, JSON.stringify(record_data.user_data));
+    // debugger
+    // var cost_list =  JSON.parse(unescape(decodeURI(url_cost)))
     // console.log(record_data);
-    if(record_data.length > 0){
-        sessionStorage.setItem("user_arr", JSON.stringify(record_data));
-        render_by_record(record_data)
+    if(record_data.user_data.length > 0){
+        sessionStorage.setItem("user_arr", JSON.stringify(record_data.user_data));
+        render_by_record(record_data.user_data)
     }
-    if(cost_list.length >0){
-        sessionStorage.setItem("cost_list", JSON.stringify(cost_list));
+    // if(cost_list.length >0){
+    //     sessionStorage.setItem("cost_list", JSON.stringify(cost_list));
+    //     console.log(cost_list);
+        
+        
+    //     // var cost_total =  Number(sessionStorage.getItem("cost_total"));
+    //     // var user_arr = get_user_data()
+    //     // var cost = Number( $('#cost').val() )
+    //     // // console.log(cost);
+    //     // var item_list = $('#item_list').val()
+    //     // var selete_user = $('#user_select').val()
+    //     // var switch_user = $('.attend_user')
 
+    //     // add_item_function(cost_list_count)
 
-        // var cost = Number( $('#cost').val() )
-        // // console.log(cost);
-        // var item_list = $('#item_list').val()
-        // var selete_user = $('#user_select').val()
-        // var switch_user = $('.attend_user')
-
-    }
+    // }
 }
 
 function copy_by_click(input_element){
@@ -96,10 +103,11 @@ function copy_by_click(input_element){
 }
 
 function share(){
-    var user_data = JSON.stringify(get_user_data())
-    var cost_list = sessionStorage.getItem('cost_list')
-    // console.log(user_data, encodeURI(user_data))
-    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}&record_cost=${encodeURI(escape(cost_list))}`
+    var user_data = JSON.stringify({
+        user_data: get_user_data(),
+        cost_list: sessionStorage.getItem('cost_list')
+    })
+    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
     var template = `
         <div class="d-flex justify-content-between">
             <input class="url_input" value="${url}"></input>
