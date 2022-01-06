@@ -57,11 +57,24 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
+    var url_cost =  window.location.href.split('&record_cost=')[1]
     var record_data = JSON.parse(unescape(decodeURI(url)))
+    var cost_list =  JSON.parse(unescape(decodeURI(url_cost)))
     // console.log(record_data);
     if(record_data.length > 0){
         sessionStorage.setItem("user_arr", JSON.stringify(record_data));
         render_by_record(record_data)
+    }
+    if(cost_list.length >0){
+        sessionStorage.setItem("cost_list", JSON.stringify(cost_list));
+
+
+        // var cost = Number( $('#cost').val() )
+        // // console.log(cost);
+        // var item_list = $('#item_list').val()
+        // var selete_user = $('#user_select').val()
+        // var switch_user = $('.attend_user')
+
     }
 }
 
@@ -84,8 +97,9 @@ function copy_by_click(input_element){
 
 function share(){
     var user_data = JSON.stringify(get_user_data())
+    var cost_list = sessionStorage.getItem('cost_list')
     // console.log(user_data, encodeURI(user_data))
-    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
+    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}&record_cost=${encodeURI(escape(cost_list))}`
     var template = `
         <div class="d-flex justify-content-between">
             <input class="url_input" value="${url}"></input>
@@ -206,76 +220,148 @@ function show_checkout_detail(){
 // 新增項目
 function add_item(cost_list_count){
     $('#add_list').click(function(){
-        var cost_total =  Number(sessionStorage.getItem("cost_total"));
-        var user_arr = get_user_data()
-        var cost = Number( $('#cost').val() )
-        // console.log(cost);
-        var item_list = $('#item_list').val()
-        var selete_user = $('#user_select').val()
-        var switch_user = $('.attend_user')
-        var share_uesr = [];
-        for(let i = 0 ; i < switch_user.length ; i++){
-            if(switch_user[i].children[0].checked){
-                share_uesr.push(switch_user[i])
-            }
-        }
-        var share_str ='';
-        for(let i = 0 ; i < share_uesr.length ; i++ ){
-            share_str += `[ ${share_uesr[i].innerText} ]`
-            if(i!= share_uesr.length-1){
-                share_str += ` , `
-            }
-        }
+        // var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        // var user_arr = get_user_data()
+        // var cost = Number( $('#cost').val() )
+        // // console.log(cost);
+        // var item_list = $('#item_list').val()
+        // var selete_user = $('#user_select').val()
+        // var switch_user = $('.attend_user')
+        // var share_uesr = [];
+        // for(let i = 0 ; i < switch_user.length ; i++){
+        //     if(switch_user[i].children[0].checked){
+        //         share_uesr.push(switch_user[i])
+        //     }
+        // }
+        // var share_str ='';
+        // for(let i = 0 ; i < share_uesr.length ; i++ ){
+        //     share_str += `[ ${share_uesr[i].innerText} ]`
+        //     if(i!= share_uesr.length-1){
+        //         share_str += ` , `
+        //     }
+        // }
 
-        if( cost <= 0 || isNaN(cost)){
-            var err_msg='請檢查 金額欄位 是否輸入正確資料'
-            call_modal(err_msg)
-        }else if(share_uesr.length == 0){
-            var err_msg='請檢查 分攤人員 是否 勾選'
-            call_modal(err_msg)
-        }else{
-            // console.log("你選到",selete_user);
-            var findIndex = user_arr.findIndex(item => item.id == selete_user)
-            // console.log(findIndex);
-            $('#cost_list').append(`
-                                    <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
-                                            購買項目 : ${item_list} <br> 
-                                            NT$${cost} ===> 分攤人員有 : ${share_str}
-                                        </div>
-                                        <button type="button" class="btn btn-danger align-self-center delete_list">
-                                            <i class="bi bi-trash"></i>
-                                        </button>   
-                                    </li>
-                                    `)
-            delete_list()
+        // if( cost <= 0 || isNaN(cost)){
+        //     var err_msg='請檢查 金額欄位 是否輸入正確資料'
+        //     call_modal(err_msg)
+        // }else if(share_uesr.length == 0){
+        //     var err_msg='請檢查 分攤人員 是否 勾選'
+        //     call_modal(err_msg)
+        // }else{
+        //     // console.log("你選到",selete_user);
+        //     var findIndex = user_arr.findIndex(item => item.id == selete_user)
+        //     // console.log(findIndex);
+        //     $('#cost_list').append(`
+        //                             <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
+        //                                 <div class="ms-2 me-auto">
+        //                                     <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
+        //                                     購買項目 : ${item_list} <br> 
+        //                                     NT$${cost} ===> 分攤人員有 : ${share_str}
+        //                                 </div>
+        //                                 <button type="button" class="btn btn-danger align-self-center delete_list">
+        //                                     <i class="bi bi-trash"></i>
+        //                                 </button>   
+        //                             </li>
+        //                             `)
+        //     delete_list()
 
-            set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
+        //     set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
 
-            cost_total += cost //總金額
-            user_arr[findIndex].cost+=cost;//個人帳戶金額
-            $('#item_list,#cost').val("")
-            $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+        //     cost_total += cost //總金額
+        //     user_arr[findIndex].cost+=cost;//個人帳戶金額
+        //     $('#item_list,#cost').val("")
+        //     $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
 
-            // set_give_cost(user_arr,selete_user,cost)
-            set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
-            store_user_data(user_arr);
-            // console.log("我新增一筆",user_arr);
+        //     // set_give_cost(user_arr,selete_user,cost)
+        //     set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
+        //     store_user_data(user_arr);
+        //     // console.log("我新增一筆",user_arr);
 
-            // 按下結帳後,再新增項目時,先把結帳資訊清空
-            $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
-            // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
-            $('#show_checkout_detail').addClass('hide')
-            $("#pay_someone_block").css('display',"none")
-            unlock_checkout()
+        //     // 按下結帳後,再新增項目時,先把結帳資訊清空
+        //     $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
+        //     // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
+        //     $('#show_checkout_detail').addClass('hide')
+        //     $("#pay_someone_block").css('display',"none")
+        //     unlock_checkout()
 
-            cost_list_count++;
-            sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
-            sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
-        }
+        //     cost_list_count++;
+        //     sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
+        //     sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
+        // }
+        add_item_function(cost_list_count)
     })
 }
+function add_item_function(cost_list_count){
+    var cost_total =  Number(sessionStorage.getItem("cost_total"));
+    var user_arr = get_user_data()
+    var cost = Number( $('#cost').val() )
+    // console.log(cost);
+    var item_list = $('#item_list').val()
+    var selete_user = $('#user_select').val()
+    var switch_user = $('.attend_user')
+    var share_uesr = [];
+    for(let i = 0 ; i < switch_user.length ; i++){
+        if(switch_user[i].children[0].checked){
+            share_uesr.push(switch_user[i])
+        }
+    }
+    var share_str ='';
+    for(let i = 0 ; i < share_uesr.length ; i++ ){
+        share_str += `[ ${share_uesr[i].innerText} ]`
+        if(i!= share_uesr.length-1){
+            share_str += ` , `
+        }
+    }
+
+    if( cost <= 0 || isNaN(cost)){
+        var err_msg='請檢查 金額欄位 是否輸入正確資料'
+        call_modal(err_msg)
+    }else if(share_uesr.length == 0){
+        var err_msg='請檢查 分攤人員 是否 勾選'
+        call_modal(err_msg)
+    }else{
+        // console.log("你選到",selete_user);
+        var findIndex = user_arr.findIndex(item => item.id == selete_user)
+        // console.log(findIndex);
+        $('#cost_list').append(`
+                                <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
+                                        購買項目 : ${item_list} <br> 
+                                        NT$${cost} ===> 分攤人員有 : ${share_str}
+                                    </div>
+                                    <button type="button" class="btn btn-danger align-self-center delete_list">
+                                        <i class="bi bi-trash"></i>
+                                    </button>   
+                                </li>
+                                `)
+        delete_list()
+
+        set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
+
+        cost_total += cost //總金額
+        user_arr[findIndex].cost+=cost;//個人帳戶金額
+        $('#item_list,#cost').val("")
+        $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+
+        // set_give_cost(user_arr,selete_user,cost)
+        set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
+        store_user_data(user_arr);
+        // console.log("我新增一筆",user_arr);
+
+        // 按下結帳後,再新增項目時,先把結帳資訊清空
+        $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
+        // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
+        $('#show_checkout_detail').addClass('hide')
+        $("#pay_someone_block").css('display',"none")
+        unlock_checkout()
+
+        cost_list_count++;
+        sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
+        sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
+    }
+}
+
 // 刪除項目
 function delete_user(user_count){
     $(`#${user_count}`).click(function(){
