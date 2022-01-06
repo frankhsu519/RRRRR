@@ -67,22 +67,22 @@ function get_record_data(){
         sessionStorage.setItem("user_arr", JSON.stringify(record_data.user_data));
         render_by_record(record_data.user_data)
     }
-    // if(cost_list.length >0){
-    //     sessionStorage.setItem("cost_list", JSON.stringify(cost_list));
-    //     console.log(cost_list);
-        
-        
-    //     // var cost_total =  Number(sessionStorage.getItem("cost_total"));
-    //     // var user_arr = get_user_data()
-    //     // var cost = Number( $('#cost').val() )
-    //     // // console.log(cost);
-    //     // var item_list = $('#item_list').val()
-    //     // var selete_user = $('#user_select').val()
-    //     // var switch_user = $('.attend_user')
+    if(record_data.cost_list.length >0){
+        sessionStorage.setItem("cost_list", JSON.stringify(record_data.cost_list));
+        sessionStorage.setItem("cost_total", record_data.cost_total);
+        console.log('cost_list:', JSON.parse(record_data.cost_list), record_data);
+    }
+    
+        // var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        // var user_arr = get_user_data()
+        // var cost = Number( $('#cost').val() )
+        // // console.log(cost);
+        // var item_list = $('#item_list').val()
+        // var selete_user = $('#user_select').val()
+        // var switch_user = $('.attend_user')
 
-    //     // add_item_function(cost_list_count)
+        // add_item_function(cost_list_count)
 
-    // }
 }
 
 function copy_by_click(input_element){
@@ -105,7 +105,8 @@ function copy_by_click(input_element){
 function share(){
     var user_data = JSON.stringify({
         user_data: get_user_data(),
-        cost_list: sessionStorage.getItem('cost_list')
+        cost_list: sessionStorage.getItem('cost_list'),
+        cost_total: sessionStorage.getItem('cost_total')
     })
     var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
     var template = `
