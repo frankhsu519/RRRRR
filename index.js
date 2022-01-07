@@ -11,20 +11,6 @@ $(document).ready(function(){
 
     // 新增user
     $('#add_user').click(function(){
-        // if(ifUserNameEmpty()){
-        //     return
-        // } else if (verifyIDuplicated()){
-        //     return
-        // }
-        // // add_user_data + render 
-        // update_data(user_count)
-
-        // // 刪除
-        // delete_user(user_count)
-
-        // user_count++;
-        // console.log(user_count)
-        // sessionStorage.setItem("user_count", `${user_count}`);
         add_user()
     })
     $('#user_name').on('keypress', function(e){
@@ -52,41 +38,46 @@ $(document).ready(function(){
     $('#share_btn').on('click', share)
 
     // 取得紀錄資料
+    window.first_render = true;
     if(window.location.href.split('record_data=').length>1) get_record_data()
+    window.first_render = false
 })
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
-    // var url_cost =  window.location.href.split('&record_cost=')[1]
     var record_data = JSON.parse(unescape(decodeURI(url)))
-    console.log(record_data, JSON.stringify(record_data.user_data));
-    // debugger
-    // var cost_list =  JSON.parse(unescape(decodeURI(url_cost)))
-    // console.log(record_data);
+    // console.log(record_data, JSON.stringify(record_data.user_data));
+
     if(record_data.user_data.length > 0){
         sessionStorage.setItem("user_arr", JSON.stringify(record_data.user_data));
         render_by_record(record_data.user_data)
     }
-    if(record_data.cost_list.length >0){
-        sessionStorage.setItem("cost_list", JSON.stringify(record_data.cost_list));
-        sessionStorage.setItem("cost_total", record_data.cost_total);
-        console.log('cost_list:', JSON.parse(record_data.cost_list), record_data);
-    }
-    
-        // var cost_total =  Number(sessionStorage.getItem("cost_total"));
-        // var user_arr = get_user_data()
-        // var cost = Number( $('#cost').val() )
-        // // console.log(cost);
-        // var item_list = $('#item_list').val()
-        // var selete_user = $('#user_select').val()
-        // var switch_user = $('.attend_user')
 
-        // add_item_function(cost_list_count)
+    if(JSON.parse(record_data.cost_list).length >0){
+        sessionStorage.setItem("cost_list", record_data.cost_list);
+        sessionStorage.setItem("cost_total", record_data.cost_total);
+        sessionStorage.setItem("cost_list_count", record_data.cost_list_count);
+        sessionStorage.setItem("user_count", record_data.user_count);
+        // console.log("cost_total", record_data.cost_total);
+        JSON.parse(record_data.cost_list).forEach((cost_item, i)=>{
+            $('#cost').val(cost_item.cost)
+            $('#item_list').val(cost_item.item_list)
+            $('#user_select').val(cost_item.selete_user);
+            // console.log($('#user_select'));
+            add_item_function(i)
+            checkout()
+
+        })
+        $('#cost').val('')
+        $('#item_list').val('')
+        $('#user_select').val('')
+        
+    }
 
 }
 
 function copy_by_click(input_element){
-    console.log(input_element);
+    // console.log(input_element);
 
     var copyText = input_element[0];
 
@@ -105,6 +96,8 @@ function copy_by_click(input_element){
 function share(){
     var user_data = JSON.stringify({
         user_data: get_user_data(),
+        cost_list_count: sessionStorage.getItem('cost_list_count'),
+        user_count:  sessionStorage.getItem('user_count'),
         cost_list: sessionStorage.getItem('cost_list'),
         cost_total: sessionStorage.getItem('cost_total')
     })
@@ -229,74 +222,6 @@ function show_checkout_detail(){
 // 新增項目
 function add_item(cost_list_count){
     $('#add_list').click(function(){
-        // var cost_total =  Number(sessionStorage.getItem("cost_total"));
-        // var user_arr = get_user_data()
-        // var cost = Number( $('#cost').val() )
-        // // console.log(cost);
-        // var item_list = $('#item_list').val()
-        // var selete_user = $('#user_select').val()
-        // var switch_user = $('.attend_user')
-        // var share_uesr = [];
-        // for(let i = 0 ; i < switch_user.length ; i++){
-        //     if(switch_user[i].children[0].checked){
-        //         share_uesr.push(switch_user[i])
-        //     }
-        // }
-        // var share_str ='';
-        // for(let i = 0 ; i < share_uesr.length ; i++ ){
-        //     share_str += `[ ${share_uesr[i].innerText} ]`
-        //     if(i!= share_uesr.length-1){
-        //         share_str += ` , `
-        //     }
-        // }
-
-        // if( cost <= 0 || isNaN(cost)){
-        //     var err_msg='請檢查 金額欄位 是否輸入正確資料'
-        //     call_modal(err_msg)
-        // }else if(share_uesr.length == 0){
-        //     var err_msg='請檢查 分攤人員 是否 勾選'
-        //     call_modal(err_msg)
-        // }else{
-        //     // console.log("你選到",selete_user);
-        //     var findIndex = user_arr.findIndex(item => item.id == selete_user)
-        //     // console.log(findIndex);
-        //     $('#cost_list').append(`
-        //                             <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
-        //                                 <div class="ms-2 me-auto">
-        //                                     <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
-        //                                     購買項目 : ${item_list} <br> 
-        //                                     NT$${cost} ===> 分攤人員有 : ${share_str}
-        //                                 </div>
-        //                                 <button type="button" class="btn btn-danger align-self-center delete_list">
-        //                                     <i class="bi bi-trash"></i>
-        //                                 </button>   
-        //                             </li>
-        //                             `)
-        //     delete_list()
-
-        //     set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
-
-        //     cost_total += cost //總金額
-        //     user_arr[findIndex].cost+=cost;//個人帳戶金額
-        //     $('#item_list,#cost').val("")
-        //     $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
-
-        //     // set_give_cost(user_arr,selete_user,cost)
-        //     set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
-        //     store_user_data(user_arr);
-        //     // console.log("我新增一筆",user_arr);
-
-        //     // 按下結帳後,再新增項目時,先把結帳資訊清空
-        //     $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
-        //     // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
-        //     $('#show_checkout_detail').addClass('hide')
-        //     $("#pay_someone_block").css('display',"none")
-        //     unlock_checkout()
-
-        //     cost_list_count++;
-        //     sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
-        //     sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
-        // }
         add_item_function(cost_list_count)
     })
 }
@@ -325,9 +250,10 @@ function add_item_function(cost_list_count){
     if( cost <= 0 || isNaN(cost)){
         var err_msg='請檢查 金額欄位 是否輸入正確資料'
         call_modal(err_msg)
-    }else if(share_uesr.length == 0){
+    }else if(share_uesr.length == 0 && !window.first_render){
         var err_msg='請檢查 分攤人員 是否 勾選'
         call_modal(err_msg)
+        // window.first_render = false;
     }else{
         // console.log("你選到",selete_user);
         var findIndex = user_arr.findIndex(item => item.id == selete_user)
@@ -345,11 +271,14 @@ function add_item_function(cost_list_count){
                                 </li>
                                 `)
         delete_list()
-
-        set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
-
-        cost_total += cost //總金額
-        user_arr[findIndex].cost+=cost;//個人帳戶金額
+        if(!window.first_render){
+            set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
+            cost_total += cost //總金額
+            user_arr[findIndex].cost+=cost;//個人帳戶金額
+            cost_list_count++;
+            sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
+            sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
+        }
         $('#item_list,#cost').val("")
         $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
 
@@ -365,9 +294,6 @@ function add_item_function(cost_list_count){
         $("#pay_someone_block").css('display',"none")
         unlock_checkout()
 
-        cost_list_count++;
-        sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
-        sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
     }
 }
 
@@ -376,7 +302,7 @@ function delete_user(user_count){
     $(`#${user_count}`).click(function(){
         var user_arr = get_user_data()
         var delete_id = $(this).attr('id')
-        console.log('我點到誰',delete_id);
+        // console.log('我點到誰',delete_id);
         var return_arr_index = user_arr.findIndex(el=>{
             return el.id == delete_id 
         })
@@ -421,7 +347,7 @@ function delete_user(user_count){
 function delete_list(){
     
     $('.delete_list').off('click').click(function(){
-        alert('我要山囉');
+        // alert('我要山囉');
         var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
         var user_arr = JSON.parse(sessionStorage.getItem('user_arr'))
         var delete_list_id = $(this).closest('li').attr('id')
@@ -496,7 +422,7 @@ function add_user_data(user_count){
             }
         }
         store_user_data(user_arr);
-        // console.log("我新增囉",user_arr);
+        console.log("我新增囉",user_arr);
 }
 // 使用他人紀錄渲染畫面
 function render_by_record(record_data){
@@ -619,21 +545,6 @@ function set_share_user(share_uesr){
     return result
 }
 
-// function share_switch_change(){
-//     $("#user_select").change(function(){
-//         var selete_user = $('#user_select').val()
-//         // console.log("你選到",selete_user);
-//         var  findCheckbox = $('.form-switch');
-//         [].forEach.call(findCheckbox,function(item,i){
-//             if(item.id == `Switch_${selete_user}`){ 
-//                 $(`#Switch_${selete_user}`).addClass("hide")
-//             }
-//             else{
-//                 $(`#Switch_${i}`).removeClass("hide")
-//             }
-//         })
-//     })
-// }
 function switch_all(){
     $('#switch_all').click(function(){
         var status = $('#switch_all').prop('checked');
