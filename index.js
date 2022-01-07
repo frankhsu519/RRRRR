@@ -71,6 +71,7 @@ function get_record_data(){
         $('#cost').val('')
         $('#item_list').val('')
         $('#user_select').val('')
+        checkout_funciton()
         
     }
 
@@ -171,6 +172,37 @@ function verifyIDuplicated(){
 // 結帳
 function checkout(){
     $('#Checkout').click(function(){
+        checkout_funciton()
+    //     var user_arr = get_user_data();
+    //     var cost_total =  Number(sessionStorage.getItem("cost_total"));
+    //     var user_count = Number(sessionStorage.getItem("user_count"));
+    //     // console.log('取得資料:' ,get_user_data())
+    //     var user_total = $('#user_total').val()
+    //     var avg_cost = cost_total /user_count ;
+    //     $("#avg_cost").text("").append(`平均每人 : ${avg_cost}`)
+    //     $("#pay_someone_block2").text('')
+    //     for(let i= 0 ; i< get_user_data().length ;i++){
+    //         $("#pay_someone_block2").append(`【 ${get_user_data()[i].name} 】 區域 <br>`)
+    //         for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
+    //             if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
+    //                 var tmp = get_user_data()[i].give_someone[j].give_cost - get_user_data()[j].give_someone[i].give_cost;
+    //                 if(tmp > 0){
+    //                     $("#pay_someone_block2").append(` 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${tmp} 元<br>`)
+    //                 }else if(tmp == 0){
+    //                     $("#pay_someone_block2").append(` 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 <br>`)
+    //                 }else if(tmp < 0){
+    //                     $("#pay_someone_block2").append(` ${get_user_data()[j].give_someone[j].user_name} 要給你  ${Math.abs(tmp)} 元<br>`)
+    //                 }
+    //                 // console.log("看看差距",tmp);
+    //             }
+    //         }
+    //         $("#pay_someone_block2").append(`<hr>`)
+    //     }
+    //     $('#show_checkout_detail').removeClass('hide')
+    })
+}
+
+function checkout_funciton(){
         var user_arr = get_user_data();
         var cost_total =  Number(sessionStorage.getItem("cost_total"));
         var user_count = Number(sessionStorage.getItem("user_count"));
@@ -197,7 +229,6 @@ function checkout(){
             $("#pay_someone_block2").append(`<hr>`)
         }
         $('#show_checkout_detail').removeClass('hide')
-    })
 }
 
 function show_checkout_detail(){
@@ -279,6 +310,7 @@ function add_item_function(cost_list_count){
             sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
             sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
         }
+
         $('#item_list,#cost').val("")
         $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
 
