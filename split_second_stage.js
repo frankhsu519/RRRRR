@@ -63,7 +63,7 @@ function transe_credit(accordingTheseData){
   var debtor = accordingTheseData.debtor;
   var pay_off_user = accordingTheseData.pay_off_user;
   var all_user_sort = [...debtor, ...pay_off_user, ...creditor];
-  console.log('排序後的所有人:', all_user_sort, all_user_sort.length -1);
+  // console.log('排序後的所有人:', all_user_sort, all_user_sort.length -1, '最大債權人:', all_user_sort[`${all_user_sort-1}`]);
 
   // 排序債權人
   var creditor_list = []
@@ -74,24 +74,16 @@ function transe_credit(accordingTheseData){
   // console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
   // console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
   console.log('債權人:', creditor ,'債務人:',  debtor)
-  
-  // 把最大債權人以外的債權都轉移給最大債權人
-  // var biggest_creditor = creditor[creditor.length-1]
-  // var biggest_creditor_id = creditor[creditor.length-1].id  // 最大債權人id 
+  console.log('最大債權人', creditor[creditor.length-1].name);
 
-
-  for(var i=0; i<all_user_sort.length-2; i++){
-    // 每個人都把自己的give_someone 加給最大債權人
-    all_user_sort[i].give_someone.forEach(each_give_someone=>{
-      // console.log('個別的give_some',each_give_someone,'個別的give cost:' , retrun_each_give_cost(each_give_someone));
-      each_give_someone -= retrun_each_give_cost(each_give_someone)  // 給這個人的歸零
-      
-      
-    })
-
-  }
-  
-
+  debtor.forEach(item=>{
+    console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
+  })
+  creditor.forEach(item=>{
+    if(creditor[creditor.length-1].name != item.name){
+      console.log( creditor[creditor.length-1].name , '要給',item.name , item.net_worth, '元')
+    }
+  })
 
 }
 
