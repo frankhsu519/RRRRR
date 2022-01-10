@@ -45,6 +45,13 @@
         width: 75%;
         margin-right: 4px;
     }
+    .btn_size {
+        width: 100px;
+        height: 48px;
+    }
+    .input_height {
+        line-height: 34px;
+    }
 
 </style>
 
@@ -64,7 +71,7 @@
                 <div class="input-group mb-3" >
                     <span class="input-group-text" id="addon-wrapping"><i class="bi bi-person-circle"></i></span>
                     <input alt="要參與分帳的人" type="text" class="form-control" id="user_name" placeholder="請輸入參與分帳人姓名">
-                    <button class="btn btn-primary" type="button" id="add_user"><i class="bi bi-person-plus-fill"></i></button>
+                    <button class="btn btn-primary btn_size" type="button" id="add_user"><i class="bi bi-person-plus-fill"></i></button>
                 </div>
             </div>
         </div>
@@ -74,7 +81,7 @@
         <div class="row" >
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3 member_list--mobile">
-                    <label class="btn btn-success no-pointer">代墊付款人</label>
+                    <label class="btn btn-success no-pointer input_height">代墊付款人</label>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
                     </select>
@@ -96,13 +103,13 @@
             
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
-                    <label class="btn btn-success no-pointer">請輸入花費項目</label>
+                    <label class="btn btn-success no-pointer input_height">請輸入花費<br/>項目</label>
                     <input alt="分帳項目" type="text" class="form-control " id="item_list" placeholder="請輸入花費項目">
                 </div>
                 <div class="input-group mb-3">
-                    <label class="btn btn-success no-pointer">請輸入金額</label>
+                    <label class="btn btn-success no-pointer input_height">請輸入金額</label>
                     <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
-                    <button type="button" class="btn btn-secondary" id="add_list"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="btn btn-danger btn_size" id="add_list"><i class="bi bi-cash-coin"></i></button>
                 </div>
             </div>
             
@@ -122,7 +129,7 @@
 
         <!-- <hr> -->
 
-        <button class="btn btn-outline-danger my-4 mx-2" type="button" id="Checkout" disabled >結帳</button>
+        <button class="btn btn-outline-danger my-4 mx-2" type="button" id="Checkout" disabled >一般分帳</button>
         <button class="btn btn-warning my-4 hide mx-2" type="button" id="show_checkout_detail">顯示明細</button>
         <button class="btn btn-info my-4mx-2" type="button" id="best_split">最佳化分帳</button>
         <button class="btn btn-info my-4" type="button" id="share_btn"><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
@@ -144,6 +151,9 @@
         <div class="row">
             <div class="col-12">
                <p id="pay_someone_block2"></p>
+               <div id="pay_someone_block_best_split">
+
+               </div>
             </div>
         </div>
 
