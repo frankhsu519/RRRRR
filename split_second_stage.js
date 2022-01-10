@@ -61,6 +61,9 @@ function transe_credit(accordingTheseData){
   var creditor = accordingTheseData.creditor;
   var debtor = accordingTheseData.debtor;
   var pay_off_user = accordingTheseData.pay_off_user;
+  var all_user_sort = [...debtor, ...pay_off_user, ...creditor];
+  console.log('排序後的所有人:', all_user_sort, all_user_sort.length -1);
+  // debugger
 
   // 排序債權人
   var creditor_list = []
@@ -68,9 +71,44 @@ function transe_credit(accordingTheseData){
     creditor_list.push(credit.net_worth)
   })
   var creditor_list_sort = simpleMergeSort(creditor_list)
-  console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
-  console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
+  // console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
+  // console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
+  // console.log('債權人:', creditor ,'債務人:',  debtor)
+  
+  // 把最大債權人以外的債權都轉移給最大債權人
+  // var biggest_creditor = creditor[creditor.length-1]
+  var biggest_creditor_id = creditor[creditor.length-1].id  // 最大債權人id 
 
+
+  for(var i=0; i<all_user_sort.length-2; i++){
+    // 每個人都把自己的give_someone 加給最大債權人
+    all_user_sort[i].give_someone.forEach(each_give_someone=>{
+      console.log('個別的give_some',each_give_someone);
+    })
+  }
+  
+
+
+
+  // for(var i = creditor.length-2; i<0; i--){
+  //   // 債權轉移
+  //   creditor[creditor.length-1] += creditor_list[i].net_worth; // 最大債權人的債權增加金額
+
+  //   creditor[creditor.length-1].give_someone.forEach(give_someone=>{
+  //     if(give_someone.user_id == creditor_list[i].id) {             
+  //       give_someone.give_cost += creditor_list[i].give_cost;
+  //       creditor_list[i].give_cost = 0
+        
+  //       // 最大債權人渲染資料庫新增債務  金額等同債權增加的金額
+        
+  //       // 轉移後該人其他比金額
+  //       give_someone.give_cost += creditor_list[i].net_worth        // 最大債權人對該人的債務增加相等金額
+  //       creditor_list[i].net_worth = 0                              // 轉移後該人淨值歸零
+  //     }
+  //   })
+    
+    
+  // }
 
 }
 
