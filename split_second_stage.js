@@ -64,7 +64,6 @@ function transe_credit(accordingTheseData){
   var pay_off_user = accordingTheseData.pay_off_user;
   var all_user_sort = [...debtor, ...pay_off_user, ...creditor];
   console.log('排序後的所有人:', all_user_sort, all_user_sort.length -1);
-  // debugger
 
   // 排序債權人
   var creditor_list = []
@@ -89,36 +88,13 @@ function transe_credit(accordingTheseData){
       
       
     })
-    // console.log('大錢包:', each_give_someone);
-    // each_give_someone[all_user_sort.length-1].give_cost += retrun_each_give_cost(each_give_someone)  // 轉移到大錢包代替給
+
   }
   
 
 
-
-  // for(var i = creditor.length-2; i<0; i--){
-  //   // 債權轉移
-  //   creditor[creditor.length-1] += creditor_list[i].net_worth; // 最大債權人的債權增加金額
-
-  //   creditor[creditor.length-1].give_someone.forEach(give_someone=>{
-  //     if(give_someone.user_id == creditor_list[i].id) {             
-  //       give_someone.give_cost += creditor_list[i].give_cost;
-  //       creditor_list[i].give_cost = 0
-        
-  //       // 最大債權人渲染資料庫新增債務  金額等同債權增加的金額
-        
-  //       // 轉移後該人其他比金額
-  //       give_someone.give_cost += creditor_list[i].net_worth        // 最大債權人對該人的債務增加相等金額
-  //       creditor_list[i].net_worth = 0                              // 轉移後該人淨值歸零
-  //     }
-  //   })
-    
-    
-  // }
-
 }
 
-// function biggest_creditor_give()
 
 function retrun_each_give_cost(ofThis){
     return ofThis.give_cost;
@@ -128,7 +104,7 @@ function retrun_each_give_cost(ofThis){
 function reverse_mony_to_id(formThisArr) {
 
   // var all_user = get_user_data();
-  var all_user = JSON.parse(sessionStorage.getItem('user_arr_sec'))
+  var all_user = get_sec_user_arr()
   var all_user_sort = [];
   formThisArr.forEach((item, i)=>{
     all_user.forEach((user, user_index)=>{
@@ -200,4 +176,8 @@ function cost_minus_give_cost(ofThisUser){
     total_amount -= amount.give_cost
   })
   return total_amount;
+}
+
+function get_sec_user_arr(){
+  return JSON.parse(sessionStorage.getItem('user_arr_sec'))
 }
