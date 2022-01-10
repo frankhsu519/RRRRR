@@ -234,7 +234,11 @@ function show_checkout_detail(){
 // 新增項目
 function add_item(cost_list_count){
     $('#add_list').click(function(){
-        add_item_function(cost_list_count)
+        if($('input[id^="Switch_"]:checked').length){
+            add_item_function(cost_list_count)
+        } else {
+            call_modal('請選擇參與分帳人員')
+        }
     })
 }
 function add_item_function(cost_list_count){
