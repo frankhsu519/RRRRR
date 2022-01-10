@@ -12,7 +12,7 @@ function get_all_user_data(){
     all_net_worth.push(cost_minus_give_cost(user))    // 準備排序陣列
 
   });
-  sessionStorage.setItem('user_arr', JSON.stringify(all_user))
+  sessionStorage.setItem('user_arr_sec', JSON.stringify(all_user))
   // console.log('帶有淨值的使用者:', all_user);
 
   // 排序最多cost的人
@@ -38,9 +38,10 @@ function sort_net_worth(fromThisArr){
     } else if (user.net_worth > 0){
       creditor.push(user)
     } else {
-      pay_off_user.push(user)
+      pay_off_user.push(user.pay_off_user)
     }
   })
+  console.log(creditor, debtor, pay_off_user);
 
   // console.log('債權人:', creditor, '債務人:', debtor);
 
@@ -73,18 +74,23 @@ function transe_credit(accordingTheseData){
   var creditor_list_sort = simpleMergeSort(creditor_list)
   // console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
   // console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
-  // console.log('債權人:', creditor ,'債務人:',  debtor)
+  console.log('債權人:', creditor ,'債務人:',  debtor)
   
   // 把最大債權人以外的債權都轉移給最大債權人
   // var biggest_creditor = creditor[creditor.length-1]
-  var biggest_creditor_id = creditor[creditor.length-1].id  // 最大債權人id 
+  // var biggest_creditor_id = creditor[creditor.length-1].id  // 最大債權人id 
 
 
   for(var i=0; i<all_user_sort.length-2; i++){
     // 每個人都把自己的give_someone 加給最大債權人
     all_user_sort[i].give_someone.forEach(each_give_someone=>{
-      console.log('個別的give_some',each_give_someone);
+      // console.log('個別的give_some',each_give_someone,'個別的give cost:' , retrun_each_give_cost(each_give_someone));
+      each_give_someone -= retrun_each_give_cost(each_give_someone)  // 給這個人的歸零
+      
+      
     })
+    // console.log('大錢包:', each_give_someone);
+    // each_give_someone[all_user_sort.length-1].give_cost += retrun_each_give_cost(each_give_someone)  // 轉移到大錢包代替給
   }
   
 
@@ -112,9 +118,17 @@ function transe_credit(accordingTheseData){
 
 }
 
+// function biggest_creditor_give()
+
+function retrun_each_give_cost(ofThis){
+    return ofThis.give_cost;
+}
+
 
 function reverse_mony_to_id(formThisArr) {
-  var all_user = get_user_data();
+
+  // var all_user = get_user_data();
+  var all_user = JSON.parse(sessionStorage.getItem('user_arr_sec'))
   var all_user_sort = [];
   formThisArr.forEach((item, i)=>{
     all_user.forEach((user, user_index)=>{
