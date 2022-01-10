@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!">
+    <meta name="google-site-verification" content="4fFzcYGd2dDNx_F4wipJxFqDvtvoMjJhQTAE1QO-JkQ" />
     </head>
     <title>分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -50,7 +51,9 @@
 <body>
     <div class="container-fulid">
         <nav class="navbar navbar-light bg-dark">
-            <h1 class="navbar-brand mb-0 text-wrap text-light lh-sm px-4 h1 ">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>        
+            <a href=window.location.origin>
+                <h1 class="navbar-brand mb-0 text-wrap text-light lh-sm px-4 h1 ">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>
+            </a>
         </nav>
     </div>
     
@@ -121,6 +124,7 @@
 
         <button class="btn btn-outline-danger my-4 mx-2" type="button" id="Checkout" disabled >結帳</button>
         <button class="btn btn-warning my-4 hide mx-2" type="button" id="show_checkout_detail">顯示明細</button>
+        <button class="btn btn-info my-4mx-2" type="button" id="best_split">最佳化分帳</button>
         <button class="btn btn-info my-4" type="button" id="share_btn"><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
         <div class="row">
             <div class="col-12">
@@ -168,4 +172,4 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="index.js"></script>
-<script src="second_stage_split.js"></script>
+<script src="./split_second_stage.js"></script>
