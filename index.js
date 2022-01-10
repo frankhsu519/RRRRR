@@ -42,7 +42,10 @@ $(document).ready(function(){
 
     // 取得紀錄資料
     window.first_render = true;
-    if(window.location.href.split('record_data=').length>1) get_record_data()
+    if(window.location.href.split('record_data=').length>1) {
+        get_record_data()      // 取得網址參數
+        get_all_user_data()    // 自動跑最佳化分帳
+    }
     window.first_render = false
 
 })
