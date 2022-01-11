@@ -66,9 +66,6 @@
     #pay_someone_block2{
         background: cadetblue;
     }
-    #pay_someone_block_best_split>li{
-        margin-bottom: 1rem;
-    }
     ul {
         padding-left: 0;
     }
@@ -174,12 +171,12 @@
                 <ul class=" result_area_result rounded p-2">
                     <li class="border-bottom" id="total_cost"></li>
                     <li class="border-bottom" id="avg_cost"></li>
-                    <li  class="border-bottom text-danger">請注意:小數點以下位數將會自動四捨五入</li>
+                    <li  class="border-bottom text-danger">請注意:金額將無條件捨去至小數點以下兩位</li>
                 </ul>
             </div>
         </div>
 
-        <div class="row pay_someone_block ">
+        <div class="row pay_someone_block p-2">
             <div class="col-12">
                 <p id="pay_someone_block" style="display: none;"></p>
             </div>

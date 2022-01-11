@@ -52,6 +52,9 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
+    var test = unescape(decodeURI(url)).replace('"', '').replace(/[\\]/g, '');
+    console.log(test);
+    
     var record_data = JSON.parse(unescape(decodeURI(url)))
     // console.log(record_data, JSON.stringify(record_data.user_data));
 
@@ -183,6 +186,11 @@ function checkout(){
     })
 }
 
+function float_to_two(num){
+    return parseInt(Math.abs(num)*100)/100
+    
+}
+
 function checkout_funciton(){
         var user_arr = get_user_data();
         var cost_total =  Number(sessionStorage.getItem("cost_total"));
@@ -190,7 +198,7 @@ function checkout_funciton(){
         // console.log('取得資料:' ,get_user_data())
         var user_total = $('#user_total').val()
         var avg_cost = cost_total /user_count ;
-        $("#avg_cost").text("").append(`平均每人 : ${Math.round(avg_cost)} 元`)
+        $("#avg_cost").text("").append(`平均每人 : ${float_to_two(avg_cost)} 元`)
         $("#pay_someone_block2").text('')
         for(let i= 0 ; i< get_user_data().length ;i++){
             $("#pay_someone_block2").append(`【 ${get_user_data()[i].name} 】 區域 <br>`)
@@ -198,11 +206,11 @@ function checkout_funciton(){
                 if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
                     var tmp = get_user_data()[i].give_someone[j].give_cost - get_user_data()[j].give_someone[i].give_cost;
                     if(tmp > 0){
-                        $("#pay_someone_block2").append(` 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${Math.round(tmp)} 元<br>`)
+                        $("#pay_someone_block2").append(`<span class="px-4"> 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${ float_to_two(tmp) } 元 </span><br>`)
                     }else if(tmp == 0){
-                        $("#pay_someone_block2").append(` 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 <br>`)
+                        $("#pay_someone_block2").append(`<span class="px-4"> 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 </span><br>`)
                     }else if(tmp < 0){
-                        $("#pay_someone_block2").append(` ${get_user_data()[j].give_someone[j].user_name} 要給你  ${Math.round(Math.abs(tmp))} 元<br>`)
+                        $("#pay_someone_block2").append(` <span class="px-4">${get_user_data()[j].give_someone[j].user_name} 要給你  ${float_to_two(tmp)} 元</span><br>`)
                     }
                     // console.log("看看差距",tmp);
                 }
@@ -229,13 +237,15 @@ function show_checkout_detail(){
         var user_count = Number(sessionStorage.getItem("user_count"));
         $("#pay_someone_block").text('')
         for(let i= 0 ; i< get_user_data().length ;i++){
-            $("#pay_someone_block").append(`${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元<br>` )
+            $("#pay_someone_block").append(`<span style="font-weight: bold;">${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元</span><br>` )
             for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
                 if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
-                    $("#pay_someone_block").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${Math.round(get_user_data()[i].give_someone[j].give_cost)} 元<br>`)
+                    $("#pay_someone_block").append(`<span class="px-4">需要給 ${get_user_data()[i].give_someone[j].user_name} - ${float_to_two(get_user_data()[i].give_someone[j].give_cost)} 元</span><br>`)
                 }
             }
-            $("#pay_someone_block").append(`<hr>`)
+            if(i != get_user_data().length-1){
+                $("#pay_someone_block").append(`<hr>`)
+            }
         }
         $('#pay_someone_block').slideToggle(300)
         setTimeout(function(){
