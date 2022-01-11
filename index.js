@@ -254,11 +254,7 @@ function show_or_hide_text(){
 // 新增項目
 function add_item(cost_list_count){
     $('#add_list').click(function(){
-        if($('input[id^="Switch_"]:checked').length){
-            add_item_function(cost_list_count)
-        } else {
-            call_modal('請選擇參與分帳人員')
-        }
+        add_item_function(cost_list_count)
     })
 }
 function add_item_function(cost_list_count){
@@ -283,7 +279,10 @@ function add_item_function(cost_list_count){
         }
     }
 
-    if( cost <= 0 || isNaN(cost)){
+    if(selete_user == null){
+        var err_msg='請檢查有無選擇代墊付款人'
+        call_modal(err_msg)
+    } else if( cost <= 0 || isNaN(cost)){
         var err_msg='請檢查 金額欄位 是否輸入正確資料'
         call_modal(err_msg)
     }else if(share_uesr.length == 0 && !window.first_render){
