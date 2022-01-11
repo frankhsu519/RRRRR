@@ -70,20 +70,6 @@ function transe_credit(accordingTheseData){
   creditor.forEach(credit=>{
     creditor_list.push(credit.net_worth)
   })
-  // var creditor_list_sort = simpleMergeSort(creditor_list)
-  // console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
-  // console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
-  // console.log('債權人:', creditor ,'債務人:',  debtor)
-  // console.log('最大債權人', creditor[creditor.length-1].name);
-
-  // debtor.forEach(item=>{
-  //   console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
-  // })
-  // creditor.forEach(item=>{
-  //   if(creditor[creditor.length-1].name != item.name){
-  //     console.log( creditor[creditor.length-1].name , '要給',item.name , item.net_worth, '元')
-  //   }
-  // })
   
   render_best_split(debtor, creditor)
 
