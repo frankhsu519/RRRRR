@@ -199,7 +199,7 @@ function checkout_funciton(){
         var user_total = $('#user_total').val()
         var avg_cost = cost_total /user_count ;
         $("#avg_cost").text("").append(`平均每人 : ${float_to_two(avg_cost)} 元`)
-        $("#pay_someone_block2").text('')
+        $("#pay_someone_block2").text('').append(`<h3 id='pay_someone_block2_title'>一般分帳</h3>`)
         for(let i= 0 ; i< get_user_data().length ;i++){
             $("#pay_someone_block2").append(`【 ${get_user_data()[i].name} 】 區域 <br>`)
             for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
@@ -221,7 +221,7 @@ function checkout_funciton(){
         }
         $('#show_checkout_detail').removeClass('hide')
         $('#pay_someone_block2').slideDown(300)
-        $('#pay_someone_block_best_split').slideUp(300)
+        $('#best_split_wrapper').slideUp(300)
         setTimeout(function(){
             document.querySelector("#pay_someone_block2").scrollIntoView({
                 behavior: 'smooth',

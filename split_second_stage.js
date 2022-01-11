@@ -180,18 +180,19 @@ function get_sec_user_arr(){
 function render_best_split(debtor, creditor){
   var debt_temp = ''
   var credit_temp = ''
-
+  $('#best_split_wrapper').html(`<h3 id='pay_someone_block2_title'>最佳化分帳</h3><ul id="pay_someone_block_best_split" class="rounded"></ul>`)
   debtor.forEach(item=>{
     // console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
-    debt_temp += `<li class="p-2 border-bottom">${item.name}要給${creditor[creditor.length-1].name} ${Math.round(Math.abs(item.net_worth))}元</li>`
+    debt_temp += `<li class="p-2 border-bottom">【 ${item.name}】要給${creditor[creditor.length-1].name} ${Math.round(Math.abs(item.net_worth))}元</li>`
   })
   creditor.forEach(item=>{
     if(creditor[creditor.length-1].name != item.name){
-      credit_temp += `<li class="p-2 border-bottom">${creditor[creditor.length-1].name} 要給 ${item.name} ${Math.round(item.net_worth)} 元</li>`
+      credit_temp += `<li class="p-2 border-bottom">【 ${creditor[creditor.length-1].name} 】要給 ${item.name} ${Math.round(item.net_worth)} 元</li>`
     }
   })
   $('#pay_someone_block2').slideUp(300)
-  $('#pay_someone_block_best_split').html(debt_temp, credit_temp).slideDown(300);
+  $('#pay_someone_block_best_split').html(debt_temp, credit_temp);
+  $('#best_split_wrapper').slideDown(300)
   setTimeout(function(){
     document.querySelector("#best_split").scrollIntoView({
       behavior: 'smooth',
