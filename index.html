@@ -155,15 +155,16 @@
 
         <button class="btn btn-info my-4 mx-1" type="button" id="Checkout" disabled >一般分帳</button>
         <button class="btn btn-info my-4 mx-1" type="button" id="best_split" disabled>最佳化分帳</button>
-        <button class="btn btn-warning my-4 hide mx-1" type="button" id="show_checkout_detail">顯示明細</button>
+        <button class="btn btn-warning my-4 hide mx-1" type="button" id="show_checkout_detail"><span class="text--show">顯示</span><span class="text--hide" style="display: none;">隱藏</span>明細</button>
         <button class="btn btn-warning my-4" type="button" id="share_btn" disabled><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
 
         <div class="row mb-4">
             <div class="col-12">
-                <div class=" result_area_result rounded p-2">
-                    <p class="border-bottom" id="total_cost"></p>
-                    <p class="border-bottom" id="avg_cost"></p>
-                </div>
+                <ul class=" result_area_result rounded p-2">
+                    <li class="border-bottom" id="total_cost"></li>
+                    <li class="border-bottom" id="avg_cost"></li>
+                    <li  class="border-bottom text-danger">請注意:小數點以下位數將會自動四捨五入</li>
+                </ul>
             </div>
         </div>
 

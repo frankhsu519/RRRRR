@@ -242,7 +242,13 @@ function show_checkout_detail(){
                 behavior: 'smooth'
             });
         }, 300)
+        show_or_hide_text()
     })
+
+}
+function show_or_hide_text(){
+    $('.text--show').toggle()
+    $('.text--hide').toggle()
 }
 
 // 新增項目
