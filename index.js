@@ -216,7 +216,8 @@ function checkout_funciton(){
         $('#pay_someone_block_best_split').slideUp(300)
         setTimeout(function(){
             document.querySelector("#pay_someone_block2").scrollIntoView({
-                behavior: 'smooth'
+                behavior: 'smooth',
+                block: 'center'
             });
         }, 300)
 }
@@ -280,15 +281,13 @@ function add_item_function(cost_list_count){
     }
 
     if(selete_user == null){
-        var err_msg='請檢查有無選擇代墊付款人'
-        call_modal(err_msg)
+        verify_input(document.querySelector("#user_select"), '請檢查有無選擇代墊付款人')
+    } else if(share_uesr.length == 0 && !window.first_render){
+        verify_input(document.querySelector("#switch_all_block"), '請檢查 分攤人員 是否 勾選')
+    } else if($('#item_list').val().length == 0){
+        verify_input(document.querySelector("#item_list"), '請檢查 花費項目 是否 填寫')
     } else if( cost <= 0 || isNaN(cost)){
-        var err_msg='請檢查 金額欄位 是否輸入正確資料'
-        call_modal(err_msg)
-    }else if(share_uesr.length == 0 && !window.first_render){
-        var err_msg='請檢查 分攤人員 是否 勾選'
-        call_modal(err_msg)
-        // window.first_render = false;
+        verify_input(document.querySelector("#cost"), '請檢查 金額欄位 是否輸入正確資料')
     }else{
         // console.log("你選到",selete_user);
         var findIndex = user_arr.findIndex(item => item.id == selete_user)
@@ -331,6 +330,16 @@ function add_item_function(cost_list_count){
         unlock_checkout()
 
     }
+}
+
+function verify_input(element, msg){
+    element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+    setTimeout(function(){
+        call_modal(msg)
+    }, 300)
 }
 
 // 刪除項目

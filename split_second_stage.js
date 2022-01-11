@@ -194,7 +194,8 @@ function render_best_split(debtor, creditor){
   $('#pay_someone_block_best_split').html(debt_temp, credit_temp).slideDown(300);
   setTimeout(function(){
     document.querySelector("#best_split").scrollIntoView({
-      behavior: 'smooth'
+      behavior: 'smooth',
+      block: 'center'
     });
   },300)
 }
