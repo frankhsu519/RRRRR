@@ -70,20 +70,22 @@ function transe_credit(accordingTheseData){
   creditor.forEach(credit=>{
     creditor_list.push(credit.net_worth)
   })
-  var creditor_list_sort = simpleMergeSort(creditor_list)
+  // var creditor_list_sort = simpleMergeSort(creditor_list)
   // console.log('排序後的債權:', creditor_list_sort, '最大債權人債權:', creditor_list_sort[creditor_list_sort.length-1]);
   // console.log('排序後的債權人:', creditor, '最大債權人', creditor[creditor.length-1]);
-  console.log('債權人:', creditor ,'債務人:',  debtor)
-  console.log('最大債權人', creditor[creditor.length-1].name);
+  // console.log('債權人:', creditor ,'債務人:',  debtor)
+  // console.log('最大債權人', creditor[creditor.length-1].name);
 
-  debtor.forEach(item=>{
-    console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
-  })
-  creditor.forEach(item=>{
-    if(creditor[creditor.length-1].name != item.name){
-      console.log( creditor[creditor.length-1].name , '要給',item.name , item.net_worth, '元')
-    }
-  })
+  // debtor.forEach(item=>{
+  //   console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
+  // })
+  // creditor.forEach(item=>{
+  //   if(creditor[creditor.length-1].name != item.name){
+  //     console.log( creditor[creditor.length-1].name , '要給',item.name , item.net_worth, '元')
+  //   }
+  // })
+  
+  render_best_split(debtor, creditor)
 
 }
 
@@ -172,4 +174,27 @@ function cost_minus_give_cost(ofThisUser){
 
 function get_sec_user_arr(){
   return JSON.parse(sessionStorage.getItem('user_arr_sec'))
+}
+
+// 渲染最佳化分帳區塊
+function render_best_split(debtor, creditor){
+  var debt_temp = ''
+  var credit_temp = ''
+
+  debtor.forEach(item=>{
+    // console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
+    debt_temp += `<li class="p-2 border-bottom">${item.name}要給${creditor[creditor.length-1].name} ${Math.abs(item.net_worth)}元</li>`
+  })
+  creditor.forEach(item=>{
+    if(creditor[creditor.length-1].name != item.name){
+      credit_temp += `<li class="p-2 border-bottom">${creditor[creditor.length-1].name} 要給 ${item.name} ${item.net_worth} 元</li>`
+    }
+  })
+  $('#pay_someone_block2').slideUp(300)
+  $('#pay_someone_block_best_split').html(debt_temp, credit_temp).slideDown(300);
+  setTimeout(function(){
+    document.querySelector("#best_split").scrollIntoView({
+      behavior: 'smooth'
+    });
+  },300)
 }

@@ -207,9 +207,18 @@ function checkout_funciton(){
                     // console.log("看看差距",tmp);
                 }
             }
-            $("#pay_someone_block2").append(`<hr>`)
+            if(i != get_user_data().length-1){
+                $("#pay_someone_block2").append(`<hr>`)
+            }
         }
         $('#show_checkout_detail').removeClass('hide')
+        $('#pay_someone_block2').slideDown(300)
+        $('#pay_someone_block_best_split').slideUp(300)
+        setTimeout(function(){
+            document.querySelector("#pay_someone_block2").scrollIntoView({
+                behavior: 'smooth'
+            });
+        }, 300)
 }
 
 function show_checkout_detail(){
@@ -227,7 +236,12 @@ function show_checkout_detail(){
             }
             $("#pay_someone_block").append(`<hr>`)
         }
-        $('#pay_someone_block').slideToggle()    
+        $('#pay_someone_block').slideToggle(300)
+        setTimeout(function(){
+            document.querySelector("#show_checkout_detail").scrollIntoView({
+                behavior: 'smooth'
+            });
+        }, 300)
     })
 }
 
@@ -607,5 +621,7 @@ function unlock_checkout(){
     var list_count = $('#cost_list li')
     if(list_count.length == 1){
         $('#Checkout').removeAttr('disabled')
+        $('#best_split').removeAttr('disabled')
+        $('#share_btn').removeAttr('disabled')
     }
 }

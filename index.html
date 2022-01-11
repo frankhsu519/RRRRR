@@ -52,6 +52,30 @@
     .input_height {
         line-height: 34px;
     }
+    #cost_list>li{
+        background-color: pink;
+    }
+    .result_area_result {
+        background: navajowhite;
+    }
+    #total_cost,
+    #avg_cost {
+        margin-bottom: 0;
+    }
+    #pay_someone_block_best_split,
+    #pay_someone_block2{
+        background: cadetblue;
+    }
+    #pay_someone_block_best_split>li{
+        margin-bottom: 1rem;
+    }
+    ul {
+        padding-left: 0;
+    }
+    li {
+        list-style: none;
+    }
+    a { color: inherit; } 
 
 </style>
 
@@ -64,7 +88,7 @@
         </nav>
     </div>
     
-    <div class="container  mt-5">
+    <div class="container mt-5 mb-5">
 
         <div class="row">
             <div class="col-12">
@@ -109,7 +133,7 @@
                 <div class="input-group mb-3">
                     <label class="btn btn-success no-pointer input_height">請輸入金額</label>
                     <input alt="分帳金額" type="text" class="form-control" id="cost" placeholder="" >
-                    <button type="button" class="btn btn-danger btn_size" id="add_list"><i class="bi bi-cash-coin"></i></button>
+                    <button type="button" class="btn btn-warning btn_size" id="add_list"><i class="bi bi-coin"></i></button>
                 </div>
             </div>
             
@@ -129,20 +153,23 @@
 
         <!-- <hr> -->
 
-        <button class="btn btn-outline-danger my-4 mx-2" type="button" id="Checkout" disabled >一般分帳</button>
-        <button class="btn btn-warning my-4 hide mx-2" type="button" id="show_checkout_detail">顯示明細</button>
-        <button class="btn btn-info my-4mx-2" type="button" id="best_split">最佳化分帳</button>
-        <button class="btn btn-info my-4" type="button" id="share_btn"><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
-        <div class="row">
+        <button class="btn btn-info my-4 mx-1" type="button" id="Checkout" disabled >一般分帳</button>
+        <button class="btn btn-info my-4 mx-1" type="button" id="best_split" disabled>最佳化分帳</button>
+        <button class="btn btn-warning my-4 hide mx-1" type="button" id="show_checkout_detail">顯示明細</button>
+        <button class="btn btn-warning my-4" type="button" id="share_btn" disabled><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
+
+        <div class="row mb-4">
             <div class="col-12">
-                <p id="total_cost"></p>
-                <p id="avg_cost"></p>
+                <div class=" result_area_result rounded p-2">
+                    <p class="border-bottom" id="total_cost"></p>
+                    <p class="border-bottom" id="avg_cost"></p>
+                </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row pay_someone_block ">
             <div class="col-12">
-               <p id="pay_someone_block" style="display: none;"></p>
+                <p id="pay_someone_block" style="display: none;"></p>
             </div>
         </div>
 
@@ -150,12 +177,15 @@
 
         <div class="row">
             <div class="col-12">
-               <p id="pay_someone_block2"></p>
-               <div id="pay_someone_block_best_split">
-
-               </div>
+                <div id="pay_someone_block2" class="rounded p-2"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <ul id="pay_someone_block_best_split" class="rounded"></ul>
+            </div>
+        </div>
+
 
     </div>
     
