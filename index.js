@@ -190,7 +190,7 @@ function checkout_funciton(){
         // console.log('取得資料:' ,get_user_data())
         var user_total = $('#user_total').val()
         var avg_cost = cost_total /user_count ;
-        $("#avg_cost").text("").append(`平均每人 : ${avg_cost}`)
+        $("#avg_cost").text("").append(`平均每人 : ${Math.round(avg_cost)} 元`)
         $("#pay_someone_block2").text('')
         for(let i= 0 ; i< get_user_data().length ;i++){
             $("#pay_someone_block2").append(`【 ${get_user_data()[i].name} 】 區域 <br>`)
@@ -198,11 +198,11 @@ function checkout_funciton(){
                 if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
                     var tmp = get_user_data()[i].give_someone[j].give_cost - get_user_data()[j].give_someone[i].give_cost;
                     if(tmp > 0){
-                        $("#pay_someone_block2").append(` 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${tmp} 元<br>`)
+                        $("#pay_someone_block2").append(` 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${Math.round(tmp)} 元<br>`)
                     }else if(tmp == 0){
                         $("#pay_someone_block2").append(` 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 <br>`)
                     }else if(tmp < 0){
-                        $("#pay_someone_block2").append(` ${get_user_data()[j].give_someone[j].user_name} 要給你  ${Math.abs(tmp)} 元<br>`)
+                        $("#pay_someone_block2").append(` ${get_user_data()[j].give_someone[j].user_name} 要給你  ${Math.round(Math.abs(tmp))} 元<br>`)
                     }
                     // console.log("看看差距",tmp);
                 }
@@ -231,7 +231,7 @@ function show_checkout_detail(){
             $("#pay_someone_block").append(`${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元<br>` )
             for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
                 if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
-                    $("#pay_someone_block").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${get_user_data()[i].give_someone[j].give_cost} <br>`)
+                    $("#pay_someone_block").append(`---- 需要給 ${get_user_data()[i].give_someone[j].user_name} - ${Math.round(get_user_data()[i].give_someone[j].give_cost)} 元<br>`)
                 }
             }
             $("#pay_someone_block").append(`<hr>`)
@@ -311,7 +311,7 @@ function add_item_function(cost_list_count){
         }
 
         $('#item_list,#cost').val("")
-        $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+        $("#total_cost").text('').append(`總共花費 : ${cost_total} 元`)
 
         // set_give_cost(user_arr,selete_user,cost)
         set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)

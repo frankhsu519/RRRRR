@@ -183,11 +183,11 @@ function render_best_split(debtor, creditor){
 
   debtor.forEach(item=>{
     // console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
-    debt_temp += `<li class="p-2 border-bottom">${item.name}要給${creditor[creditor.length-1].name} ${Math.abs(item.net_worth)}元</li>`
+    debt_temp += `<li class="p-2 border-bottom">${item.name}要給${creditor[creditor.length-1].name} ${Math.round(Math.abs(item.net_worth))}元</li>`
   })
   creditor.forEach(item=>{
     if(creditor[creditor.length-1].name != item.name){
-      credit_temp += `<li class="p-2 border-bottom">${creditor[creditor.length-1].name} 要給 ${item.name} ${item.net_worth} 元</li>`
+      credit_temp += `<li class="p-2 border-bottom">${creditor[creditor.length-1].name} 要給 ${item.name} ${Math.round(item.net_worth)} 元</li>`
     }
   })
   $('#pay_someone_block2').slideUp(300)
