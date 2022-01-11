@@ -113,11 +113,21 @@ function share(){
         cost_total: sessionStorage.getItem('cost_total')
     })
     var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
+    var text_normal = $('#pay_someone_block2').text();
+    var text_best = $('#best_split_wrapper').text();
     var template = `
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-4">
             <input class="url_input" value="${url}"></input>
             <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn">複製連結</button>
-        </div>`
+        </div>
+        <div class="d-flex justify-content-between mb-4">
+            <input class="normal_input input--copy" value="${text_normal}"></input>
+            <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn_normal">複製<br>一般分帳</button>
+        </div>
+        <div class="d-flex justify-content-between">
+        <input class="best_input input--copy" value="${text_best}"></input>
+        <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn_best">複製<br>最佳分帳</button>
+    </div>`
     // console.log(url);
 
     call_modal(template, 'share')
@@ -125,6 +135,12 @@ function share(){
     $('#copy_btn').off('click')
     $('#copy_btn').on('click', function(){
         copy_by_click($(this).parent().find('.url_input'))
+    })
+    $('#copy_btn_normal').on('click', function(){
+        copy_by_click($(this).parent().find('.normal_input'))
+    })
+    $('#copy_btn_best').on('click', function(){
+        copy_by_click($(this).parent().find('.best_input'))
     })
 }
 
