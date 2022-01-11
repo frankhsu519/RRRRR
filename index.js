@@ -236,7 +236,7 @@ function checkout_funciton(){
             }
         }
         $('#show_checkout_detail').removeClass('hide')
-        $('#pay_someone_block2').slideDown(300)
+        $('#pay_someone_block2').slideDown(300).addClass('active')
         $('#best_split_wrapper').slideUp(300)
         setTimeout(function(){
             document.querySelector("#pay_someone_block2").scrollIntoView({

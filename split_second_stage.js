@@ -178,7 +178,7 @@ function render_best_split(debtor, creditor){
   })
   $('#pay_someone_block2').slideUp(300)
   $('#pay_someone_block_best_split').html(debt_temp, credit_temp);
-  $('#best_split_wrapper').slideDown(300)
+  $('#best_split_wrapper').slideDown(300).addClass('active')
   setTimeout(function(){
     document.querySelector("#best_split").scrollIntoView({
       behavior: 'smooth',

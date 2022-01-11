@@ -63,8 +63,8 @@
     #avg_cost {
         margin-bottom: 0;
     }
-    #best_split_wrapper,
-    #pay_someone_block2{
+    #best_split_wrapper.active,
+    #pay_someone_block2.active{
         background: cadetblue;
     }
     ul {
@@ -139,7 +139,7 @@
             
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
-                    <label class="btn btn-success no-pointer input_height">請輸入花費<br/>項目</label>
+                    <label class="btn btn-success no-pointer input_height">請輸入花費項目</label>
                     <input alt="分帳項目" type="text" class="form-control " id="item_list" placeholder="請輸入花費項目">
                 </div>
                 <div class="input-group mb-3">
@@ -173,9 +173,9 @@
         <div class="row mb-4">
             <div class="col-12">
                 <ul class=" result_area_result rounded p-2">
-                    <li class="border-bottom" id="total_cost"></li>
-                    <li class="border-bottom" id="avg_cost"></li>
-                    <li  class="border-bottom text-danger">請注意:金額將無條件捨去至小數點以下兩位</li>
+                    <li id="total_cost"></li>
+                    <li id="avg_cost"></li>
+                    <li  class="text-danger">請注意:金額將無條件捨去至小數點以下兩位</li>
                 </ul>
             </div>
         </div>
