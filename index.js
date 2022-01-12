@@ -44,7 +44,7 @@ $(document).ready(function(){
     window.first_render = true;
     if(window.location.href.split('record_data=').length>1) {
         get_record_data()      // 取得網址參數
-        // get_all_user_data()    // 自動跑最佳化分帳
+        // 自動跑一般/最佳化分帳
         var record_data = decode_data();
         if(record_data.type == 'best'){
             get_all_user_data()
