@@ -44,18 +44,35 @@ $(document).ready(function(){
     window.first_render = true;
     if(window.location.href.split('record_data=').length>1) {
         get_record_data()      // 取得網址參數
-        get_all_user_data()    // 自動跑最佳化分帳
+        // get_all_user_data()    // 自動跑最佳化分帳
+        var record_data = decode_data();
+        if(record_data.type == 'best'){
+            get_all_user_data()
+        } else {
+            checkout_funciton()
+        }
+
     }
     window.first_render = false
 
 })
 
-function get_record_data(){
+function decode_data(){
     var url = window.location.href.split('record_data=')[1]
     var remove_quertion_mark = url.replace('?', '');
     // console.log('getdecode:', unescape(decodeURI(remove_quertion_mark)));
     var record_data = JSON.parse(unescape(decodeURI(remove_quertion_mark)))
     // console.log(record_data, JSON.stringify(record_data.user_data));
+    return record_data;
+}
+
+function get_record_data(){
+    // var url = window.location.href.split('record_data=')[1]
+    // var remove_quertion_mark = url.replace('?', '');
+    // // console.log('getdecode:', unescape(decodeURI(remove_quertion_mark)));
+    // var record_data = JSON.parse(unescape(decodeURI(remove_quertion_mark)))
+    // // console.log(record_data, JSON.stringify(record_data.user_data));
+    var record_data = decode_data();
 
     if(record_data.user_data.length > 0){
         sessionStorage.setItem("user_arr", JSON.stringify(record_data.user_data));
@@ -104,12 +121,14 @@ function copy_by_click(input_element){
 }
 
 function share(){
+    set_type()
     var user_data = JSON.stringify({
         user_data: get_user_data(),
         cost_list_count: sessionStorage.getItem('cost_list_count'),
         user_count:  sessionStorage.getItem('user_count'),
         cost_list: sessionStorage.getItem('cost_list'),
-        cost_total: sessionStorage.getItem('cost_total')
+        cost_total: sessionStorage.getItem('cost_total'),
+        type: sessionStorage.getItem('type')
     })
     // console.log('getincode', user_data);
     var url = window.location.href+`?record_data=${encodeURIComponent(escape(user_data))}`
@@ -142,6 +161,23 @@ function share(){
     $('#copy_btn_best').on('click', function(){
         copy_by_click($(this).parent().find('.best_input'))
     })
+}
+
+function set_type(){
+    var normal = $('#pay_someone_block2').css("display") != 'none';
+    var best = $('#best_split_wrapper').css("display") != 'none';
+    if(normal && best){
+        console.log('一般分帳')
+        sessionStorage.setItem('type', 'normal')
+    } else if(best) {
+        console.log('最佳化');
+        sessionStorage.setItem('type', 'best')
+    } else {
+        console.log('一般分帳');
+        sessionStorage.setItem('type', 'normal')
+    }
+    // 如果兩個都false 就顯示一般
+    console.log(normal, best);
 }
 
 function add_user(){
