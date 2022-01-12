@@ -52,10 +52,9 @@ $(document).ready(function(){
 
 function get_record_data(){
     var url = window.location.href.split('record_data=')[1]
-    var test = unescape(decodeURI(url)).replace('"', '').replace(/[\\]/g, '');
-    console.log(test);
-    
-    var record_data = JSON.parse(unescape(decodeURI(url)))
+    var remove_quertion_mark = url.replace('?', '');
+    // console.log('getdecode:', unescape(decodeURI(remove_quertion_mark)));
+    var record_data = JSON.parse(unescape(decodeURI(remove_quertion_mark)))
     // console.log(record_data, JSON.stringify(record_data.user_data));
 
     if(record_data.user_data.length > 0){
@@ -112,7 +111,8 @@ function share(){
         cost_list: sessionStorage.getItem('cost_list'),
         cost_total: sessionStorage.getItem('cost_total')
     })
-    var url = window.location.href+`?record_data=${encodeURI(escape(user_data))}`
+    // console.log('getincode', user_data);
+    var url = window.location.href+`?record_data=${encodeURIComponent(escape(user_data))}`
     var text_normal = $('#pay_someone_block2').text();
     var text_best = $('#best_split_wrapper').text();
     var template = `
