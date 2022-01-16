@@ -321,14 +321,13 @@ function add_item(cost_list_count, share_user){
     })
 }
 function add_item_function(cost_list_count, share_uesr){
-
     var cost_total =  Number(sessionStorage.getItem("cost_total"));
     var user_arr = get_user_data()
     var cost = Number( $('#cost').val() )
     var item_list = $('#item_list').val()
     var selete_user = $('#user_select').val()
     var switch_user = $('.attend_user')
-    if(share_uesr.length == 0) {
+    if(!share_uesr) {
         var share_uesr = [];
     }
     for(let i = 0 ; i < switch_user.length ; i++){
