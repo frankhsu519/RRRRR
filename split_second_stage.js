@@ -12,6 +12,7 @@ function get_all_user_data(){
     all_net_worth.push(cost_minus_give_cost(user))    // 準備排序陣列
 
   });
+  console.log('已付英婦',all_user);
   sessionStorage.setItem('user_arr_sec', JSON.stringify(all_user))
   // console.log('帶有淨值的使用者:', all_user);
 
@@ -41,7 +42,7 @@ function sort_net_worth(fromThisArr){
       pay_off_user.push(user.pay_off_user)
     }
   })
-  console.log(creditor, debtor, pay_off_user);
+  // console.log('排序過後：' ,creditor, debtor, pay_off_user);
 
   // console.log('債權人:', creditor, '債務人:', debtor);
 
@@ -70,7 +71,7 @@ function transe_credit(accordingTheseData){
   creditor.forEach(credit=>{
     creditor_list.push(credit.net_worth)
   })
-  
+  console.log('債務人',debtor,'債權人', creditor);
   render_best_split(debtor, creditor)
 
 }
@@ -177,7 +178,11 @@ function render_best_split(debtor, creditor){
     }
   })
   $('#pay_someone_block2').slideUp(300)
-  $('#pay_someone_block_best_split').html(debt_temp, credit_temp);
+
+
+$('#pay_someone_block_best_split').empty().append(debt_temp);
+$('#pay_someone_block_best_split').append(credit_temp);
+  // $('#pay_someone_block_best_split').html(debt_temp, credit_temp);
   $('#best_split_wrapper').slideDown(300).addClass('active')
   setTimeout(function(){
     document.querySelector("#pay_someone_block_best_split").scrollIntoView({
