@@ -89,8 +89,8 @@ function get_record_data(){
             $('#cost').val(cost_item.cost)
             $('#item_list').val(cost_item.item_list)
             $('#user_select').val(cost_item.selete_user);
-            // console.log($('#user_select'));
-            add_item_function(i)
+            console.log(cost_item.share_uesr);
+            add_item_function(i, cost_item.share_uesr)
             checkout()
 
         })
@@ -167,17 +167,17 @@ function set_type(){
     var normal = $('#pay_someone_block2').css("display") != 'none';
     var best = $('#best_split_wrapper').css("display") != 'none';
     if(normal && best){
-        console.log('一般分帳')
+        // console.log('一般分帳')
         sessionStorage.setItem('type', 'normal')
     } else if(best) {
-        console.log('最佳化');
+        // console.log('最佳化');
         sessionStorage.setItem('type', 'best')
     } else {
-        console.log('一般分帳');
+        // console.log('一般分帳');
         sessionStorage.setItem('type', 'normal')
     }
     // 如果兩個都false 就顯示一般
-    console.log(normal, best);
+    // console.log(normal, best);
 }
 
 function add_user(){
@@ -194,7 +194,7 @@ function add_user(){
     delete_user(user_count)
 
     user_count++;
-    console.log(user_count)
+    // console.log(user_count)
     sessionStorage.setItem("user_count", `${user_count}`);
 }
 
@@ -315,20 +315,22 @@ function show_or_hide_text(){
 }
 
 // 新增項目
-function add_item(cost_list_count){
+function add_item(cost_list_count, share_user){
     $('#add_list').click(function(){
-        add_item_function(cost_list_count)
+        add_item_function(cost_list_count, share_user)
     })
 }
-function add_item_function(cost_list_count){
+function add_item_function(cost_list_count, share_uesr){
+
     var cost_total =  Number(sessionStorage.getItem("cost_total"));
     var user_arr = get_user_data()
     var cost = Number( $('#cost').val() )
-    // console.log(cost);
     var item_list = $('#item_list').val()
     var selete_user = $('#user_select').val()
     var switch_user = $('.attend_user')
-    var share_uesr = [];
+    if(share_uesr.length == 0) {
+        var share_uesr = [];
+    }
     for(let i = 0 ; i < switch_user.length ; i++){
         if(switch_user[i].children[0].checked){
             share_uesr.push(switch_user[i])
@@ -336,7 +338,7 @@ function add_item_function(cost_list_count){
     }
     var share_str ='';
     for(let i = 0 ; i < share_uesr.length ; i++ ){
-        share_str += `[ ${share_uesr[i].innerText} ]`
+        share_str += `[ ${share_uesr[i].innerText?share_uesr[i].innerText:share_uesr[i]} ]`
         if(i!= share_uesr.length-1){
             share_str += ` , `
         }
@@ -351,9 +353,7 @@ function add_item_function(cost_list_count){
     } else if( cost <= 0 || isNaN(cost)){
         verify_input(document.querySelector("#cost"), '請檢查 金額欄位 是否輸入正確資料')
     }else{
-        // console.log("你選到",selete_user);
         var findIndex = user_arr.findIndex(item => item.id == selete_user)
-        // console.log(findIndex);
         $('#cost_list').append(`
                                 <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
                                     <div class="ms-2 me-auto">
@@ -417,7 +417,7 @@ function delete_user(user_count){
         var err_msg_owned = ""
         for(let i = 0 ; i < user_arr.length ; i++){
 
-            console.log(user_arr[return_arr_index].give_someone[i].give_cost);
+            // console.log(user_arr[return_arr_index].give_someone[i].give_cost);
         
             if(user_arr[return_arr_index].give_someone[i].give_cost != 0 && user_arr[return_arr_index].id != user_arr[return_arr_index].give_someone[i].user_id){
                 err_msg +=`【 ${user_arr[return_arr_index].name} (你) 】 與 【 ${user_arr[return_arr_index].give_someone[i].user_name} 】還有 一些 金錢 曖昧不清楚 ( ${user_arr[return_arr_index].give_someone[i].give_cost} 元 )<br>`  
@@ -446,7 +446,7 @@ function delete_user(user_count){
         $(this).closest(`#del_${delete_id}`).remove();
         $(`#user_select option[value=${delete_id}]`).remove()
         $(`#Switch_${delete_id}`).remove()
-        console.log("現在剩下",user_arr);
+        // console.log("現在剩下",user_arr);
         store_user_data(user_arr);
         })
 }
@@ -484,8 +484,8 @@ function delete_list(){
 }
 
 function retrun_give_cost(cost_list,delete_list_id,user_arr){
-    console.log("你有東西嗎 :",cost_list);
-    console.log("阿你哩 ? ",delete_list_id);
+    // console.log("你有東西嗎 :",cost_list);
+    // console.log("阿你哩 ? ",delete_list_id);
     var index = cost_list.findIndex( item => {
         return item.list_id == delete_list_id
     })
@@ -529,7 +529,7 @@ function add_user_data(user_count){
             }
         }
         store_user_data(user_arr);
-        console.log("我新增囉",user_arr);
+        // console.log("我新增囉",user_arr);
 }
 // 使用他人紀錄渲染畫面
 function render_by_record(record_data){
@@ -624,7 +624,7 @@ function set_user_split_by_memte_select(){
         var $split_member = $('.split_member_wrapper .split_member')
         for(var i=0; i<$split_member.length;i++){
             if($split_member[i].id == $(this).val()){
-                console.log($split_member[i].parentElement.children[1]);
+                // console.log($split_member[i].parentElement.children[1]);
                 $split_member[i].parentElement.children[1].classList.add('active')
             }
         }
@@ -640,7 +640,7 @@ function set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count){
             cost,
             list_id:`list_${cost_list_count}`
         })
-    console.log('我砍看裡面放了什麼',cost_list);
+    // console.log('我砍看裡面放了什麼',cost_list);
     sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
 }
 

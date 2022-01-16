@@ -12,7 +12,6 @@ function get_all_user_data(){
     all_net_worth.push(cost_minus_give_cost(user))    // 準備排序陣列
 
   });
-  console.log('已付英婦',all_user);
   sessionStorage.setItem('user_arr_sec', JSON.stringify(all_user))
   // console.log('帶有淨值的使用者:', all_user);
 
@@ -71,7 +70,7 @@ function transe_credit(accordingTheseData){
   creditor.forEach(credit=>{
     creditor_list.push(credit.net_worth)
   })
-  console.log('債務人',debtor,'債權人', creditor);
+  // console.log('債務人',debtor,'債權人', creditor);
   render_best_split(debtor, creditor)
 
 }
