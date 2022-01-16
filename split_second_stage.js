@@ -41,20 +41,11 @@ function sort_net_worth(fromThisArr){
       pay_off_user.push(user.pay_off_user)
     }
   })
-  // console.log('排序過後：' ,creditor, debtor, pay_off_user);
-
   // console.log('債權人:', creditor, '債務人:', debtor);
 
   // 將所有債權人的債權集中到最大債權人身上
   transe_credit({creditor, debtor, pay_off_user})
 
-  // 將債務人的錢轉給債權人
-  // debtor.forEach(deb_user=>{
-  //   creditor.forEach(cre_user=>{
-  //     deb_user.net_worth
-
-  //    })
-  // })
 
 }
 
