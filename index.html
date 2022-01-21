@@ -73,7 +73,15 @@
     li {
         list-style: none;
     }
-    a { color: inherit; } 
+    a { 
+        color: inherit; 
+        text-decoration: none;
+    } 
+    a:hover {
+        color:#00A0C6; 
+        text-decoration:none; 
+        cursor:pointer;  
+    }
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -188,18 +196,68 @@
 
         <!-- <hr> -->
 
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-12">
                 <div id="pay_someone_block2" class="rounded p-2"></div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-12">
                 <div id="best_split_wrapper" class=" rounded p-2">
                     <ul id="pay_someone_block_best_split" ></ul>
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-4">
+
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <a href="">
+                        <h5 class="text-uppercase">著作權聲明</h5>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <a href="">
+                        <h5 class="text-uppercase">隱私權政策</h5>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <a href="">
+                        <h5 class="text-uppercase">免責聲明</h5>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <a href="">
+                        <h5 class="text-uppercase">聯繫我們</h5>
+                    </a>
+                </div>
+
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
 
 
     </div>
