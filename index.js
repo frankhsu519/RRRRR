@@ -474,11 +474,11 @@ function delete_list(){
         cost_total-= cost_list[findIndex].cost
         $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
         sessionStorage.setItem('cost_total',JSON.stringify(cost_total))
-
         cost_list.splice(findIndex,1)
         $(this).closest('li').remove()
         sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
         
+        $("#avg_cost").text("")
     })
     
 }
