@@ -54,6 +54,7 @@ $(document).ready(function(){
 
     }
     window.first_render = false
+    bambuger_triger()
 
 })
 
@@ -699,4 +700,10 @@ function unlock_checkout(){
         $('#best_split').removeAttr('disabled')
         $('#share_btn').removeAttr('disabled')
     }
+}
+
+function bambuger_triger(){
+    $('.navbar-toggler').on('click', function(){
+        $('#navbarColor01').toggle('show')
+    })
 }

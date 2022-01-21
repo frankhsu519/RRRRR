@@ -96,17 +96,39 @@
     #pay_someone_block_best_split :last-child{
         border-bottom: 0 !important;
     }
+    .container {
+        min-height: calc( 100vh - 8rem );
+    }
 
 </style>
 
 <body>
-    <div class="container-fulid">
-        <nav class="navbar navbar-light bg-dark">
-            <a href=window.location.origin>
-                <h1 class="navbar-brand mb-0 text-wrap text-light lh-sm px-4 h1 ">分帳好幫手！算錢、分帳一鍵完成，懶人分帳，快速計算，出遊、開趴免煩惱!</h1>
-            </a>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand p-2 m-0" href="#">SPLIT! 死不賴帳</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item p-2 active">
+                    <a class="nav-link" href="#">計算首頁</a>
+                    </li>
+                    <li class="nav-item p-2">
+                    <a class="nav-link" href="#">開發理念</a>
+                    </li>
+                    <li class="nav-item p-2">
+                    <a class="nav-link" href="#">聯繫我們</a>
+                    </li>
+                    <li class="nav-item p-2">
+                    <a class="nav-link" href="#">關於我們</a>
+                    </li>
+                </ul>
+
+            </div>
         </nav>
-    </div>
+        <!-- Navbar -->
     
     <div class="container mt-5 mb-5">
 
@@ -209,58 +231,58 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="bg-dark text-center text-white">
-            <!-- Grid container -->
-            <div class="container p-4">
-
-            <!-- Section: Links -->
-            <section class="">
-                <!--Grid row-->
-                <div class="row">
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <a href="">
-                        <h5 class="text-uppercase">著作權聲明</h5>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <a href="">
-                        <h5 class="text-uppercase">隱私權政策</h5>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <a href="">
-                        <h5 class="text-uppercase">免責聲明</h5>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <a href="">
-                        <h5 class="text-uppercase">聯繫我們</h5>
-                    </a>
-                </div>
-
-                </div>
-                <!--Grid row-->
-            </section>
-            <!-- Section: Links -->
-            </div>
-            <!-- Grid container -->
-
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2020 Copyright:
-            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
-        <!-- Footer -->
-
-
+        
+        
     </div>
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="p-4">
+
+        <!-- Section: Links -->
+        <section class="">
+            <!--Grid row-->
+            <div class="row">
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <a href="">
+                    <h5 class="text-uppercase">著作權聲明</h5>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <a href="">
+                    <h5 class="text-uppercase">隱私權政策</h5>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <a href="">
+                    <h5 class="text-uppercase">免責聲明</h5>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <a href="">
+                    <h5 class="text-uppercase">聯繫我們</h5>
+                </a>
+            </div>
+
+            </div>
+            <!--Grid row-->
+        </section>
+        <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
     
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
