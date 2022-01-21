@@ -322,12 +322,17 @@ function add_item(cost_list_count, share_user){
     })
 }
 function add_item_function(cost_list_count, share_uesr){
+    //
     var cost_total =  Number(sessionStorage.getItem("cost_total"));
     var user_arr = get_user_data()
     var cost = Number( $('#cost').val() )
     var item_list = $('#item_list').val()
     var selete_user = $('#user_select').val()
     var switch_user = $('.attend_user')
+
+
+    
+
     if(!share_uesr) {
         var share_uesr = [];
     }
@@ -353,22 +358,15 @@ function add_item_function(cost_list_count, share_uesr){
     } else if( cost <= 0 || isNaN(cost)){
         verify_input(document.querySelector("#cost"), '請檢查 金額欄位 是否輸入正確資料')
     }else{
+        // add_item_function_render()
+
         var findIndex = user_arr.findIndex(item => item.id == selete_user)
-        $('#cost_list').append(`
-                                <li class="list-group-item d-flex justify-content-between align-items-start" id="list_${cost_list_count}">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">代墊人員 : ${user_arr[findIndex].name} </div>
-                                        購買項目 : ${item_list} <br> 
-                                        NT$${cost} ===> 分攤人員有 : ${share_str}
-                                    </div>
-                                    <button type="button" class="btn btn-danger align-self-center delete_list">
-                                        <i class="bi bi-trash"></i>
-                                    </button>   
-                                </li>
-                                `)
+        set_cost_list(user_arr[findIndex].id, item_list, share_uesr, cost, cost_list_count)
+        add_item_function_render()
         delete_list()
+
+        // 取紀錄
         if(!window.first_render){
-            set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count)
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
             cost_list_count++;
@@ -392,6 +390,37 @@ function add_item_function(cost_list_count, share_uesr){
         unlock_checkout()
 
     }
+}
+
+function add_item_function_render(){
+    var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
+    var user_arr = get_user_data()
+    var template = ''
+    cost_list.forEach((item, i)=>{
+        template += `<li class="list-group-item d-flex justify-content-between align-items-start" id="list_${i}">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">代墊人員 : ${user_arr[item.selete_user].name} </div>
+                購買項目 : ${item.item_list} <br> 
+                NT$${item.cost} ===> 分攤人員有 : ${
+                    loop_share_user(item.share_uesr)}
+            </div>
+            <button type="button" class="btn btn-danger align-self-center delete_list">
+                <i class="bi bi-trash"></i>
+            </button>   
+        </li>`
+    })
+    $('#cost_list').html(template)
+    
+}
+
+function loop_share_user(share_uesr){
+    var result = ''
+    share_uesr.forEach((user_str, i)=>{
+        console.log(share_uesr.length, i);
+        result += i==share_uesr.length-1?`【 ${user_str} 】`:`【 ${user_str} 】 , `
+    })
+    return result
+
 }
 
 function verify_input(element, msg){
@@ -472,15 +501,30 @@ function delete_list(){
         retrun_give_cost(cost_list,delete_list_id,user_arr)
 
         cost_total-= cost_list[findIndex].cost
-        $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
-        sessionStorage.setItem('cost_total',JSON.stringify(cost_total))
-        cost_list.splice(findIndex,1)
-        $(this).closest('li').remove()
-        sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+
+
+        delete_list_render(cost_total, findIndex, cost_list, $(this))
+
+        // $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+        // sessionStorage.setItem('cost_total',JSON.stringify(cost_total))
+        // cost_list.splice(findIndex,1)
+        // $(this).closest('li').remove()
+        // sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
         
-        $("#avg_cost").text("")
+        // $("#avg_cost").text("")
     })
     
+}
+
+function delete_list_render(cost_total, findIndex, cost_list, current_item){
+    
+    $("#total_cost").text('').append(`總共花費 : ${cost_total}`)
+    sessionStorage.setItem('cost_total',JSON.stringify(cost_total))
+    cost_list.splice(findIndex,1)
+    current_item.closest('li').remove()
+    sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+    
+    $("#avg_cost").text("")
 }
 
 function retrun_give_cost(cost_list,delete_list_id,user_arr){
