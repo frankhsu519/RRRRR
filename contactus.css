@@ -1,0 +1,31 @@
+.banner {
+  max-width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: 
+  linear-gradient(105deg, #000 60%, transparent 60%),url('./banner.jpg');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner .banner__text {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.banner .banner__text h1,
+.banner .banner__text h2 {
+  text-shadow: 0.1em 0.1em 0.05em #333;
+}
+.banner .banner__text input {
+  border: 0;
+  font-size: 30px;
+  max-width: 400px;
+}
+input:focus {
+  outline: 0;
+}
