@@ -68,11 +68,6 @@ function decode_data(){
 }
 
 function get_record_data(){
-    // var url = window.location.href.split('record_data=')[1]
-    // var remove_quertion_mark = url.replace('?', '');
-    // // console.log('getdecode:', unescape(decodeURI(remove_quertion_mark)));
-    // var record_data = JSON.parse(unescape(decodeURI(remove_quertion_mark)))
-    // // console.log(record_data, JSON.stringify(record_data.user_data));
     var record_data = decode_data();
 
     if(record_data.user_data.length > 0){
@@ -90,7 +85,7 @@ function get_record_data(){
             $('#cost').val(cost_item.cost)
             $('#item_list').val(cost_item.item_list)
             $('#user_select').val(cost_item.selete_user);
-            console.log(cost_item.share_uesr);
+            // console.log(cost_item.share_uesr);
             add_item_function(i, cost_item.share_uesr)
             checkout()
 
@@ -330,9 +325,6 @@ function add_item_function(cost_list_count, share_uesr){
     var selete_user = $('#user_select').val()
     var switch_user = $('.attend_user')
 
-
-    
-
     if(!share_uesr) {
         var share_uesr = [];
     }
@@ -365,7 +357,7 @@ function add_item_function(cost_list_count, share_uesr){
 
         
         // 取紀錄
-        if(!window.first_render){
+        if(window.first_render){
             cost_total += cost //總金額
             user_arr[findIndex].cost+=cost;//個人帳戶金額
             cost_list_count = Number(sessionStorage.getItem('cost_list_count')) + 1;
@@ -659,7 +651,6 @@ function set_user_split_by_memte_select(){
         var $split_member = $('.split_member_wrapper .split_member')
         for(var i=0; i<$split_member.length;i++){
             if($split_member[i].id == $(this).val()){
-                // console.log($split_member[i].parentElement.children[1]);
                 $split_member[i].parentElement.children[1].classList.add('active')
             }
         }
@@ -667,17 +658,17 @@ function set_user_split_by_memte_select(){
 }
 
 function set_cost_list(selete_user,item_list,share_uesr,cost,cost_list_count){
-    console.log(cost_list_count);
     var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
-    cost_list.push({
-            selete_user,
-            item_list,
-            share_uesr: set_share_user(share_uesr),
-            cost,
-            list_id:`list_${cost_list_count}`
-        })
-    // console.log('我砍看裡面放了什麼',cost_list);
-    sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+    if(!window.first_render){
+        cost_list.push({
+                selete_user,
+                item_list,
+                share_uesr: set_share_user(share_uesr),
+                cost,
+                list_id:`list_${cost_list_count}`
+            })
+        sessionStorage.setItem('cost_list',JSON.stringify(cost_list))
+    }
 }
 
 function set_share_user(share_uesr){
