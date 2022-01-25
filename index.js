@@ -241,7 +241,7 @@ function float_to_two(num){
 
 function checkout_funciton(){
         var user_arr = get_user_data();
-        var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        var cost_total =  get_cost_total();
         var user_count = Number(sessionStorage.getItem("user_count"));
         // console.log('取得資料:' ,get_user_data())
         var user_total = $('#user_total').val()
@@ -355,7 +355,7 @@ function add_item_function(cost_list_count, share_uesr){
         add_item_function_render()
 
         
-        var cost_total =  set_cost_total();
+        var cost_total =  get_cost_total();
         // 取紀錄
         if(window.first_render){
             cost_total += cost //總金額
@@ -383,9 +383,8 @@ function add_item_function(cost_list_count, share_uesr){
     }
 }
 
-function set_cost_total(){
+function get_cost_total(){
     var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
-    debugger
     var cost_total = 0
     cost_list.forEach(item=>{
         cost_total += Number(item.item_list)
