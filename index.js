@@ -283,19 +283,19 @@ function show_checkout_detail(){
         var user_arr = get_user_data();
         var cost_total =  Number(sessionStorage.getItem("cost_total"));
         var user_count = Number(sessionStorage.getItem("user_count"));
-        $("#pay_someone_block").text('')
+        $("#detail_block").text('')
         for(let i= 0 ; i< get_user_data().length ;i++){
-            $("#pay_someone_block").append(`<span style="font-weight: bold;">${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元</span><br>` )
+            $("#detail_block").append(`<span style="font-weight: bold;">${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元</span><br>` )
             for(let j = 0 ; j < get_user_data()[i].give_someone.length ;j++){
                 if(user_arr[i].id !== get_user_data()[i].give_someone[j].user_id){
-                    $("#pay_someone_block").append(`<span class="px-4">需要給 ${get_user_data()[i].give_someone[j].user_name} - ${float_to_two(get_user_data()[i].give_someone[j].give_cost)} 元</span><br>`)
+                    $("#detail_block").append(`<span class="px-4">需要給 ${get_user_data()[i].give_someone[j].user_name} - ${float_to_two(get_user_data()[i].give_someone[j].give_cost)} 元</span><br>`)
                 }
             }
             if(i != get_user_data().length-1){
-                $("#pay_someone_block").append(`<hr>`)
+                $("#detail_block").append(`<hr>`)
             }
         }
-        $('#pay_someone_block').slideToggle(300)
+        $('#detail_block').slideToggle(300)
         setTimeout(function(){
             document.querySelector("#show_checkout_detail").scrollIntoView({
                 behavior: 'smooth'
@@ -374,10 +374,10 @@ function add_item_function(cost_list_count, share_uesr){
         // console.log("我新增一筆",user_arr);
 
         // 按下結帳後,再新增項目時,先把結帳資訊清空
-        $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
+        $("#pay_someone_block2,#avg_cost").text('')
         // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
         $('#show_checkout_detail').addClass('hide')
-        $("#pay_someone_block").css('display',"none")
+        $("#detail_block,#pay_someone_block2").css('display',"none")
         unlock_checkout()
 
     }
@@ -509,7 +509,8 @@ function delete_list_render(cost_total, findIndex, cost_list, current_item){
     sessionStorage.setItem('cost_list_count', JSON.stringify(cost_list.length))
     sessionStorage.setItem('cost_list', JSON.stringify(cost_list))
     // current_item.closest('li').remove()
-    $("#avg_cost").text("")
+    $("#avg_cost").text("");
+    // $("#pay_someone_block").css('display',"none");
     add_item_function_render()
 }
 
