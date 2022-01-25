@@ -366,7 +366,7 @@ function add_item_function(cost_list_count, share_uesr){
         }
 
         $('#item_list,#cost').val("")
-        $("#total_cost").text('').append(`總共花費 : ${cost_total} 元`)
+        $("#total_cost").text('').append(`總共花費 : ${window.first_render?get_cost_total():cost_total} 元`)
 
         // set_give_cost(user_arr,selete_user,cost)
         set_give_cost_new(user_arr,selete_user,cost,share_uesr,findIndex)
