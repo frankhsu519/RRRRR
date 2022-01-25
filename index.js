@@ -382,10 +382,10 @@ function add_item_function(cost_list_count, share_uesr){
         // console.log("我新增一筆",user_arr);
 
         // 按下結帳後,再新增項目時,先把結帳資訊清空
-        $("#pay_someone_block,#pay_someone_block2,#avg_cost").text('')
+        $("#pay_someone_block2,#avg_cost").text('')
         // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
         $('#show_checkout_detail').addClass('hide')
-        $("#pay_someone_block").css('display',"none")
+        $("#pay_someone_block2").css('display',"none")
         unlock_checkout()
 
     }
