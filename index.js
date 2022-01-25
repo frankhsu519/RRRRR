@@ -256,7 +256,7 @@ function checkout_funciton(){
                     if(tmp > 0){
                         $("#pay_someone_block2").append(`<span class="px-4"> 要給 ${get_user_data()[i].give_someone[j].user_name} --- ${ float_to_two(tmp) } 元 </span><br>`)
                     }else if(tmp == 0){
-                        $("#pay_someone_block2").append(`<span class="px-4"> 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 </span><br>`)
+                        // $("#pay_someone_block2").append(`<span class="px-4"> 跟 ${get_user_data()[i].give_someone[j].user_name} 的 錢 互相抵銷了 </span><br>`)
                     }else if(tmp < 0){
                         $("#pay_someone_block2").append(` <span class="px-4">${get_user_data()[j].give_someone[j].user_name} 要給你  ${float_to_two(tmp)} 元</span><br>`)
                     }
@@ -388,9 +388,12 @@ function add_item_function_render(){
     var user_arr = get_user_data()
     var template = ''
     cost_list.forEach((item, i)=>{
+        var findIDindex = user_arr.findIndex( el => {
+            return el.id == item.selete_user
+        })
         template += `<li class="list-group-item d-flex justify-content-between align-items-start" id="${item.list_id}">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">代墊人員 : ${user_arr[item.selete_user].name} </div>
+                <div class="fw-bold">代墊人員 : ${user_arr[findIDindex].name} </div>
                 購買項目 : ${item.item_list} <br> 
                 NT$${item.cost} ===> 分攤人員有 : ${
                     loop_share_user(item.share_uesr)}
