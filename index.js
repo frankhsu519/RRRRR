@@ -318,7 +318,6 @@ function add_item(cost_list_count, share_user){
 }
 function add_item_function(cost_list_count, share_uesr){
     //
-    var cost_total =  Number(sessionStorage.getItem("cost_total"));
     var user_arr = get_user_data()
     var cost = Number( $('#cost').val() )
     var item_list = $('#item_list').val()
@@ -356,6 +355,7 @@ function add_item_function(cost_list_count, share_uesr){
         add_item_function_render()
 
         
+        var cost_total =  set_cost_total();
         // 取紀錄
         if(window.first_render){
             cost_total += cost //總金額
@@ -381,6 +381,16 @@ function add_item_function(cost_list_count, share_uesr){
         unlock_checkout()
 
     }
+}
+
+function set_cost_total(){
+    var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
+    debugger
+    var cost_total = 0
+    cost_list.forEach(item=>{
+        cost_total += Number(item.item_list)
+    })
+    return cost_total
 }
 
 function add_item_function_render(){
