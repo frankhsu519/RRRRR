@@ -36,10 +36,12 @@
         cursor: pointer;
     }
     .split_member_input:hover {
-        background-color: #17a2b8;
+        background-color: #85dcba;
+        border-color: #85dcba;
     }
     .split_member_input.active {
-        background-color: #ffc107;
+        background-color: #e8a87c;
+        border-color: #e8a87c;
     }
     .url_input,
     .input--copy {
@@ -54,7 +56,7 @@
         line-height: 34px;
     }
     #cost_list>li{
-        background-color: pink;
+        background-color: cadetblue;
     }
     .result_area_result {
         background: navajowhite;
@@ -99,10 +101,64 @@
     .container {
         min-height: calc( 100vh - 8rem );
     }
+    .section_label,
+    .section_label:hover,
+    .section_label:focus,
+    .section_label:active {
+        background: cadetblue;
+        border: 1px solid cadetblue;
+        outline: none;
+        color: white
+    }
+    .icon_btn,
+    .icon_btn:hover,
+    .icon_btn:focus,
+    .icon_btn:active {
+        background: #e17d60;
+        border: 1px solid #e17d60;
+        outline: none;
+        color: white
+    }
+    .normal_btn,
+    .normal_btn:hover,
+    .normal_btn:focus,
+    .normal_btn:active {
+        background: 	#e17d60;
+        border: 1px solid 	#e17d60;
+        outline: none;
+        color: white
+    }
+    .sm_btn:checked {
+        background-color: #e8a87c;
+        border-color:#e8a87c;
+    }
+    .split_member,
+    .split_member:hover,
+    .split_member:focus,
+    .split_member:active {
+        background: 	#c38d9e;
+        border: 1px solid 	#c38d9e;
+        outline: none;
+        color: white
+    }
+    .delete_list {
+        background: 	#c38d9e;
+        border: 1px solid 	#c38d9e;
+        outline: none;
+        color: white
+    }
+    .result_area_result  {
+        background: 	#e8a87c;
+        border: 1px solid 	#e8a87c;
+    }
+    .modal_btn {
+        background: #e17d60;
+        border: 1px solid #e17d60;
+    }
 
 </style>
 
-<body class="bg-dark bg-gradient">
+<body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand p-2 m-0" href="#">SPLIT! 死不賴帳</a>
@@ -137,7 +193,7 @@
                 <div class="input-group mb-3" >
                     <span class="input-group-text" id="addon-wrapping"><i class="bi bi-person-circle"></i></span>
                     <input alt="要參與分帳的人" type="text" class="form-control" id="user_name" placeholder="請輸入參與分帳人姓名">
-                    <button class="btn btn-primary btn_size" type="button" id="add_user"><i class="bi bi-person-plus-fill"></i></button>
+                    <button class="btn btn-primary btn_size icon_btn" type="button" id="add_user"><i class="bi bi-person-plus-fill"></i></button>
                 </div>
             </div>
         </div>
@@ -147,7 +203,7 @@
         <div class="row" >
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3 member_list--mobile">
-                    <label class="btn btn-success no-pointer input_height">代墊付款人</label>
+                    <label class="btn btn-success no-pointer input_height section_label">代墊付款人</label>
                     <select class="form-select" id="user_select">
                         <option selected disabled>請選擇代墊付款人</option>
                     </select>
@@ -159,23 +215,23 @@
             </div>
            
             
-            <div class="col-12 col-md-4 mt-3 text-white" id="pay_share">
-                <label class="btn btn-success no-pointer mb-2 col-12">分攤人員: </label>
+            <div class="col-12 col-md-4 mt-3" id="pay_share">
+                <label class="btn btn-success no-pointer mb-2 col-12 section_label">分攤人員: </label>
                 <div class="form-check hide form-switch mx-3" id="switch_all_block">
-                    <input alt="大家一起均分" class="form-check-input" type="checkbox" id="switch_all">
+                    <input alt="大家一起均分" class="form-check-input sm_btn" type="checkbox" id="switch_all">
                     <label class="form-check-label " for="switch_all">全選</label>
                 </div>
             </div>
             
             <div class="col-12 col-md-4 mt-3">
                 <div class="input-group mb-3">
-                    <label class="btn btn-success no-pointer input_height">請輸入花費項目</label>
+                    <label class="btn btn-success no-pointer input_height section_label">請輸入花費項目</label>
                     <input alt="分帳項目" type="text" class="form-control " id="item_list" placeholder="請輸入花費項目">
                 </div>
                 <div class="input-group mb-3">
-                    <label class="btn btn-success no-pointer input_height">請輸入金額</label>
+                    <label class="btn btn-success no-pointer input_height section_label">請輸入金額</label>
                     <input alt="分帳金額" type="number" class="form-control" id="cost" placeholder="" >
-                    <button type="button" class="btn btn-warning btn_size" id="add_list"><i class="bi bi-coin"></i></button>
+                    <button type="button" class="btn btn-warning btn_size icon_btn" id="add_list"><i class="bi bi-coin"></i></button>
                 </div>
             </div>
             
@@ -195,10 +251,10 @@
 
         <!-- <hr> -->
 
-        <button class="btn btn-info my-4 mx-1" type="button" id="Checkout" disabled >一般分帳</button>
-        <button class="btn btn-info my-4 mx-1" type="button" id="best_split" disabled>最佳化分帳</button>
-        <button class="btn btn-warning my-4 hide mx-1" type="button" id="show_checkout_detail"><span class="text--show">顯示</span><span class="text--hide" style="display: none;">隱藏</span>明細</button>
-        <button class="btn btn-warning my-4" type="button" id="share_btn" disabled><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
+        <button class="btn my-4 mx-1 normal_btn" type="button" id="Checkout" disabled >一般分帳</button>
+        <button class="btn my-4 mx-1 normal_btn" type="button" id="best_split" disabled>最佳化分帳</button>
+        <button class="btn my-4 hide mx-1 normal_btn" type="button" id="show_checkout_detail"><span class="text--show">顯示</span><span class="text--hide" style="display: none;">隱藏</span>明細</button>
+        <button class="btn my-4 normal_btn" type="button" id="share_btn" disabled><span class="mx-2">分享計算結果</span><i class="bi bi-share-fill"></i></button>
 
         <div class="row mb-4">
             <div class="col-12">
@@ -212,7 +268,7 @@
 
         <div class="row pay_someone_block p-2">
             <div class="col-12">
-                <p id="detail_block" style="display: none;"></p>
+                <p id="detail_block" class="rounded p-2" style="display: none; background-color: white;"></p>
             </div>
         </div>
 

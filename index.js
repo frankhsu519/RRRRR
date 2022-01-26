@@ -107,15 +107,15 @@ function share(){
     var template = `
         <div class="d-flex justify-content-between mb-4">
             <input class="url_input" value="${url}"></input>
-            <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn">複製連結</button>
+            <button type="button" class="btn modal_btn fw-bold copy_btn" id="copy_btn">複製連結</button>
         </div>
-        <div class="d-flex justify-content-between mb-4">
+        <div class="d-flex justify-content-between mb-4">  
             <input class="normal_input input--copy" value="${text_normal}"></input>
-            <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn_normal">複製<br>一般分帳</button>
+            <button type="button" class="btn modal_btn fw-bold copy_btn" id="copy_btn_normal">複製<br>一般分帳</button>
         </div>
         <div class="d-flex justify-content-between">
         <input class="best_input input--copy" value="${text_best}"></input>
-        <button type="button" class="btn btn-info fw-bold copy_btn" id="copy_btn_best">複製<br>最佳分帳</button>
+        <button type="button" class="btn modal_btn fw-bold copy_btn" id="copy_btn_best">複製<br>最佳分帳</button>
     </div>`
     // console.log(url);
 
@@ -283,7 +283,7 @@ function render(user_count){
         <div class="col-12 mt-3 split_member_wrapper" id=del_${user_count}>
             <div class="input-group ">
                 <span class="btn btn-danger split_member" id="${user_count}"><i class="bi bi-dash-lg"></i></span>
-                <input type="text" class="form-control me-3 split_member_input" value= ${user_name} disabled>
+                <input type="text" class="form-control split_member_input" value= ${user_name} disabled>
             </div>
         </div>
         `
@@ -301,7 +301,7 @@ function render(user_count){
     $('#pay_share').append(
         `
         <div class="form-check form-switch attend_user mx-3" id=Switch_${user_count}>
-                <input class="form-check-input" type="checkbox" role="switch" id="Switch_${user_name}">
+                <input class="form-check-input sm_btn" type="checkbox" role="switch" id="Switch_${user_name}">
                 <label class="form-check-label" for="Switch_${user_name}">${user_name}</label>
         </div>            
         `
@@ -568,7 +568,7 @@ function add_item_function_render(){
                 NT$${item.cost} ===> 分攤人員有 : ${
                     loop_share_user(item.share_uesr)}
             </div>
-            <button type="button" class="btn btn-danger align-self-center delete_list">
+            <button type="button" class="btn align-self-center delete_list">
                 <i class="bi bi-trash"></i>
             </button>   
         </li>`
