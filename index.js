@@ -119,7 +119,7 @@ function share(){
     </div>`
     // console.log(url);
 
-    call_modal(template, 'share')
+    call_modal(template, 'share') 
     // 註冊一鍵複製事件
     $('#copy_btn').off('click')
     $('#copy_btn').on('click', function(){
@@ -338,7 +338,7 @@ function delete_user(user_count){
                 err_msg_owned += `【 ${user_arr[i].name} 】 還有 ${user_arr[i].give_someone[return_arr_index].give_cost} 元 沒給  【 ${user_arr[return_arr_index].name} (你)  】<br>`
             }
         }
-        if ( err_msg != ""){
+        if ( err_msg != "" || err_msg_owned != ""){
             call_modal(err_msg+err_msg_owned)
             return
         }
