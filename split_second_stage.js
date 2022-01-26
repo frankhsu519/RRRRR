@@ -157,7 +157,6 @@ function get_sec_user_arr(){
 function render_best_split(debtor, creditor){
   var debt_temp = ''
   var credit_temp = ''
-  debugger
   // console.log('債務人：', debtor,'債權人:' ,creditor);
   $('#best_split_wrapper').html(`<h3 id='pay_someone_block2_title'>最佳化分帳</h3><ul id="pay_someone_block_best_split" class="rounded"></ul>`)
   debtor.forEach(item=>{
