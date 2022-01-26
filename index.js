@@ -96,7 +96,8 @@ function share(){
         cost_list_count: sessionStorage.getItem('cost_list_count'),
         user_count:  sessionStorage.getItem('user_count'),
         cost_list: sessionStorage.getItem('cost_list'),
-        cost_total: sessionStorage.getItem('cost_total'),
+        // cost_total: sessionStorage.getItem('cost_total'),
+        cost_total: get_cost_total(),
         type: sessionStorage.getItem('type')
     })
     // console.log('getincode', user_data);
@@ -418,8 +419,8 @@ function float_to_two(num){
 function show_checkout_detail(){
     $('#show_checkout_detail').click(function(){
         var user_arr = get_user_data();
-        var cost_total =  Number(sessionStorage.getItem("cost_total"));
-        var user_count = Number(sessionStorage.getItem("user_count"));
+        // var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        // var user_count = Number(sessionStorage.getItem("user_count"));
         $("#detail_block").text('')
         for(let i= 0 ; i< get_user_data().length ;i++){
             $("#detail_block").append(`<span style="font-weight: bold;">${get_user_data()[i].name} 總共代墊 : ${get_user_data()[i].cost} 元</span><br>` )
@@ -603,7 +604,7 @@ function delete_list(){
         var cost_list = JSON.parse(sessionStorage.getItem('cost_list'))
         var user_arr = JSON.parse(sessionStorage.getItem('user_arr'))
         var delete_list_id = $(this).closest('li').attr('id')
-        var cost_total =  Number(sessionStorage.getItem("cost_total"));
+        var cost_total =  get_cost_total();
         var findIndex = cost_list.findIndex(item=>{
             return item.list_id == delete_list_id
         })
