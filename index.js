@@ -349,7 +349,6 @@ function add_item_function(cost_list_count, share_uesr){
     } else if( cost <= 0 || isNaN(cost)){
         verify_input(document.querySelector("#cost"), '請檢查 金額欄位 是否輸入正確資料')
     }else{
-        // add_item_function_render()
         var findIndex = user_arr.findIndex(item => item.id == selete_user)
         set_cost_list(user_arr[findIndex].id, item_list, share_uesr, cost, sessionStorage.getItem('cost_list_count'))
         add_item_function_render()
@@ -357,9 +356,9 @@ function add_item_function(cost_list_count, share_uesr){
         
         var cost_total =  get_cost_total();
         // 取紀錄
+        user_arr[findIndex].cost+=cost;//個人帳戶金額
         if(window.first_render){
             cost_total += cost //總金額
-            user_arr[findIndex].cost+=cost;//個人帳戶金額
             cost_list_count = Number(sessionStorage.getItem('cost_list_count')) + 1;
             sessionStorage.setItem("cost_list_count", JSON.stringify(cost_list_count));
             sessionStorage.setItem("cost_total", JSON.stringify(cost_total));
@@ -378,7 +377,7 @@ function add_item_function(cost_list_count, share_uesr){
         // 按下結帳後,再新增項目時,先把把 顯示明細 明細區塊 隱藏
         $('#show_checkout_detail').addClass('hide')
         $("#detail_block,#pay_someone_block2").css('display',"none")
-        unlock_checkout()
+        // unlock_checkout()
 
     }
 }
@@ -414,6 +413,7 @@ function add_item_function_render(){
     })
     $('#cost_list').html(template)
     delete_list()
+    unlock_checkout()
 }
 
 function loop_share_user(share_uesr){
@@ -735,6 +735,7 @@ function call_modal(err_msg, type){
 
 function unlock_checkout(){
     var list_count = $('#cost_list li')
+    debugger
     if(list_count.length == 1){
         $('#Checkout').removeAttr('disabled')
         $('#best_split').removeAttr('disabled')

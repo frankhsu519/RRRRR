@@ -61,7 +61,7 @@ function transe_credit(accordingTheseData){
   creditor.forEach(credit=>{
     creditor_list.push(credit.net_worth)
   })
-  // console.log('債務人',debtor,'債權人', creditor);
+  console.log('債務人',debtor,'債權人', creditor);
   render_best_split(debtor, creditor)
 
 }
@@ -157,10 +157,11 @@ function get_sec_user_arr(){
 function render_best_split(debtor, creditor){
   var debt_temp = ''
   var credit_temp = ''
+  // console.log('債務人：', debtor,'債權人:' ,creditor);
   $('#best_split_wrapper').html(`<h3 id='pay_someone_block2_title'>最佳化分帳</h3><ul id="pay_someone_block_best_split" class="rounded"></ul>`)
   debtor.forEach(item=>{
     // console.log(item.name, '要給',creditor[creditor.length-1].name , Math.abs(item.net_worth), '元')
-    debt_temp += `<li class="p-2 border-bottom">【 ${item.name} 】要給${creditor[creditor.length-1].name} ${Math.round(Math.abs(item.net_worth))}元</li>`
+    debt_temp += `<li class="p-2 border-bottom">【 ${item.name} 】要給${creditor[creditor.length-1]?creditor[creditor.length-1].name:'查無此人'} ${Math.round(Math.abs(item.net_worth))}元</li>`
   })
   creditor.forEach(item=>{
     if(creditor[creditor.length-1].name != item.name){
